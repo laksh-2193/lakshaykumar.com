@@ -1,0 +1,161 @@
+{
+  "portfolio": {
+    "name": "Lakshay Kumar",
+    "title": "Lakshay Kumar - Portfolio",
+    "aliases": ["@alphic"],
+    "cta": {
+      "primary": "Let's chat",
+      "secondary": "FREE : I’ll help you build a no-cost prototype",
+      "link_text": "Let’s talk"
+    },
+    "intro": {
+      "emoji": "👋🏻",
+      "tagline": "Something exciting you might like!",
+      "highlight": {
+        "product": "DocIQ",
+        "description": "Make your PDFs interactive and engaging",
+        "url":"https://www.dociq.space/"
+      }
+    },
+    "about": {
+      "section_title": "Who am I ?",
+      "summary": [
+        "Interested in thoughtful tech, curious conversations, and building things that matter.",
+        "Focused on solving real-world problems with empathy, detail, and intentional design.",
+        "Works at the intersection of technology and possibility, turning ideas into products and prompts into conversations.",
+        "Enjoys writing clean, purposeful code, experimenting with AI systems, and making technology feel more human."
+      ],
+      "identity": "Generative AI engineer and founder who enjoys building thoughtful solutions with creativity."
+    },
+    "skill_set": [
+      "Making AI sound smart (and occasionally funny)",
+      "Turning vague ideas into working products",
+      "Writing code that doesn’t hate future me",
+      "Automating things so humans don’t have to",
+      "Shipping fast, fixing bugs faster (usually)"
+    ],
+    "services": {
+      "section_title": "How can I help you?",
+      "offerings": [
+        {
+          "title": "Generative AI & LLM Integration",
+          "description": "Designing and deploying systems that leverage large language models for smart automation and meaningful conversation interfaces."
+        },
+        {
+          "title": "Product Thinking with a Builder’s Mindset",
+          "description": "Balancing speed and precision to turn early ideas into usable, scalable products with strong UX and clarity."
+        },
+        {
+          "title": "Full-Stack Engineering",
+          "description": "Backend APIs to clean frontends with attention to performance, maintainability, and elegance."
+        },
+        {
+          "title": "Automation & Workflow Design",
+          "description": "Building intelligent systems that reduce friction and combine human judgment with AI."
+        },
+        {
+          "title": "Startup-Ready Execution",
+          "description": "Comfortable wearing multiple hats, from system architecture to writing launch copy that sounds human."
+        }
+      ]
+    },
+    "skills": {
+      "automation": [
+        "Task Automation with AI",
+        "Workflow Orchestration (Zapier, Python scripts)",
+        "Prompt Design for Agents",
+        "Agentic Workflows (Auto-GPT style)",
+        "LangChain / OpenRouter / Claude API Integration"
+      ],
+      "entrepreneurship": [
+        "Pitch Deck Design",
+        "Tech Product Design",
+        "Tech Product Development",
+        "Product Ideation",
+        "Prototyping"
+      ],
+      "social_skills": [
+        "Team Leadership",
+        "Prompt Engineering",
+        "Public Speaking",
+        "Communication"
+      ],
+      "technical_skills": [
+        "Market Research & Validation",
+        "Product-Market Fit Discovery",
+        "Web Scraping",
+        "Tensorflow & PyTorch",
+        "SQL & NoSQL Databases",
+        "API Design & Integration",
+        "Machine Learning",
+        "FastAPI",
+        "Python"
+      ]
+    },
+    "experience": [
+      {
+        "company": "Zato",
+        "role": "Generative AI Engineer",
+        "employment_type": "Full Time",
+        "start_date": "2025-04-01",
+        "end_date": null
+      },
+      {
+        "company": "GAIT Global",
+        "role": "Data Scientist",
+        "employment_type": "Internship",
+        "start_date": "2024-03-01",
+        "end_date": "2025-03-31"
+      },
+      {
+        "company": "Atria Foundation",
+        "role": "Technical Project Lead",
+        "employment_type": "Full Time",
+        "start_date": "2023-02-01",
+        "end_date": "2024-03-31"
+      },
+      {
+        "company": "HealthArk Insights",
+        "role": "Data Science Intern",
+        "employment_type": "Internship",
+        "start_date": "2023-04-01",
+        "end_date": "2024-06-30"
+      },
+      {
+        "company": "Atria University",
+        "role": "Research Assistant",
+        "employment_type": "Full Time",
+        "start_date": "2021-09-01",
+        "end_date": "2022-01-31"
+      },
+      {
+        "company": "Hex Business Innovations",
+        "role": "Web & App Developer",
+        "employment_type": "Full Time",
+        "start_date": "2021-06-01",
+        "end_date": "2021-08-31"
+      }
+    ],
+    "experiments": {
+      "section_title": "Things I Tried (And Learned From)",
+      "projects": [
+        {
+          "name": "Techuro",
+          "lesson": "Strong vision, but early execution lacked product-market fit and momentum."
+        },
+        {
+          "name": "Eve-Link",
+          "lesson": "Underestimated the difficulty of changing human behavior in live networking settings."
+        },
+        {
+          "name": "NFC Smart Cards",
+          "lesson": "Cool idea, but hard to monetize without a must-have use case and easy to copy."
+        },
+        {
+          "name": "Linky",
+          "description": "Job automation tool"
+        }
+      ]
+    }
+  }
+}

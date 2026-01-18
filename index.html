@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <meta name="description" content="Portfolio">
+
+    <!-- Google Fonts: Space Grotesk with extreme weight range -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Three.js canvas for particle field background -->
+    <canvas id="scene"></canvas>
+
+    <!-- Main content container -->
+    <main class="content">
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <div class="hero__inner">
+                <h1 class="hero__name"></h1>
+                <p class="hero__tagline"></p>
+                <div class="hero__highlight"></div>
+                <div class="hero__cta"></div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <h2 class="section-title"></h2>
+            <div class="about__content"></div>
+            <div class="about__identity"></div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services">
+            <h2 class="section-title"></h2>
+            <div class="services__grid"></div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills">
+            <h2 class="section-title">Capabilities</h2>
+            <div class="skills__grid"></div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="experience">
+            <h2 class="section-title">Experience</h2>
+            <div class="experience__timeline"></div>
+        </section>
+
+        <!-- Experiments Section -->
+        <section id="experiments" class="experiments">
+            <h2 class="section-title"></h2>
+            <div class="experiments__grid"></div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="contact__content">
+                <h2 class="contact__heading"></h2>
+                <a class="contact__email" href=""></a>
+                <div class="contact__links"></div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="footer" class="footer">
+            <p class="footer__text"></p>
+        </footer>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="scene.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
