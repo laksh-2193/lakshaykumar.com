@@ -223,8 +223,7 @@ function populateContact(portfolio) {
     // So we'll leave this empty for now or add placeholders
     if (contactLinks) {
         contactLinks.innerHTML = `
-            <a href="https://github.com/${portfolio.name?.toLowerCase().replace(' ', '')}" target="_blank" rel="noopener">GitHub</a>
-            <a href="https://linkedin.com/in/${portfolio.name?.toLowerCase().replace(' ', '-')}" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://linkedin.com/in/lakshaykumar-tech" target="_blank" rel="noopener">LinkedIn</a>
         `;
     }
 }
