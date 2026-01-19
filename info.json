@@ -2,11 +2,13 @@
   "portfolio": {
     "name": "Lakshay Kumar",
     "title": "Lakshay Kumar - Portfolio",
-    "aliases": ["@alphic"],
+    "aliases": [
+      "@alphic"
+    ],
     "cta": {
       "primary": "Let's chat",
-      "secondary": "FREE : I’ll help you build a no-cost prototype",
-      "link_text": "Let’s talk"
+      "secondary": "FREE : I'll help you build a no-cost prototype",
+      "link_text": "Let's talk"
     },
     "intro": {
       "emoji": "👋🏻",
@@ -14,7 +16,7 @@
       "highlight": {
         "product": "DocIQ",
         "description": "Make your PDFs interactive and engaging",
-        "url":"https://www.dociq.space/"
+        "url": "https://www.dociq.space/"
       }
     },
     "about": {
@@ -30,8 +32,8 @@
     "skill_set": [
       "Making AI sound smart (and occasionally funny)",
       "Turning vague ideas into working products",
-      "Writing code that doesn’t hate future me",
-      "Automating things so humans don’t have to",
+      "Writing code that doesn't hate future me",
+      "Automating things so humans don't have to",
       "Shipping fast, fixing bugs faster (usually)"
     ],
     "services": {
@@ -42,7 +44,7 @@
           "description": "Designing and deploying systems that leverage large language models for smart automation and meaningful conversation interfaces."
         },
         {
-          "title": "Product Thinking with a Builder’s Mindset",
+          "title": "Product Thinking with a Builder's Mindset",
           "description": "Balancing speed and precision to turn early ideas into usable, scalable products with strong UX and clarity."
         },
         {
@@ -156,6 +158,15 @@
           "description": "Job automation tool"
         }
       ]
+    },
+    "contact": {
+      "email": [
+        "hey@lakshaykumar.tech",
+        "connect@lakshaykumar.tech"
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/lakshaykumar-tech/"
+      }
     }
   }
 }

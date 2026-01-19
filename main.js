@@ -25,6 +25,9 @@
         // Initialize scroll-based color transitions
         initColorTransitions();
 
+        // Initialize contact form
+        initContactForm();
+
     } catch (error) {
         console.error('Failed to load portfolio data:', error);
     }
@@ -203,29 +206,87 @@ function populateExperiments(portfolio) {
 // Populate Contact Section
 function populateContact(portfolio) {
     const contactHeading = document.querySelector('.contact__heading');
-    const contactEmail = document.querySelector('.contact__email');
     const contactLinks = document.querySelector('.contact__links');
 
-    // For now, use a default heading since it's not in the JSON
+    // Use the CTA link text as heading
     if (contactHeading) {
-        contactHeading.textContent = "Let's Connect";
+        contactHeading.textContent = portfolio.cta?.link_text || "Let's talk";
     }
 
-    // Email - extract from cta link or use a placeholder
-    if (contactEmail) {
-        // We'll use the CTA primary text for now
-        const emailText = portfolio.cta?.link_text || 'Get in touch';
-        contactEmail.textContent = emailText;
-        contactEmail.href = '#contact';
-    }
+    // Add email and social links from contact data
+    if (contactLinks && portfolio.contact) {
+        const emailLinks = portfolio.contact.email?.map(email =>
+            `<a href="mailto:${email}">${email}</a>`
+        ).join('') || '';
 
-    // Social links - we don't have these in the current JSON structure
-    // So we'll leave this empty for now or add placeholders
-    if (contactLinks) {
-        contactLinks.innerHTML = `
-            <a href="https://linkedin.com/in/lakshaykumar-tech" target="_blank" rel="noopener">LinkedIn</a>
-        `;
+        const socialLinks = portfolio.contact.socials?.linkedin ?
+            `<a href="${portfolio.contact.socials.linkedin}" target="_blank" rel="noopener">LinkedIn</a>` : '';
+
+        contactLinks.innerHTML = emailLinks + socialLinks;
     }
+}
+
+// Initialize Contact Form
+function initContactForm() {
+    const form = document.getElementById('contactForm');
+    const statusDiv = document.getElementById('formStatus');
+    const submitButton = form?.querySelector('.form-submit');
+
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Disable submit button
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+        }
+
+        // Clear previous status
+        if (statusDiv) {
+            statusDiv.classList.remove('visible', 'success', 'error');
+            statusDiv.textContent = '';
+        }
+
+        // Get form data
+        const formData = new FormData(form);
+
+        try {
+            // Submit to FormSubmit
+            const response = await fetch('https://formsubmit.co/connect@lakshaykumar.com', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                // Success
+                if (statusDiv) {
+                    statusDiv.textContent = 'Message sent successfully! I\'ll get back to you soon.';
+                    statusDiv.classList.add('visible', 'success');
+                }
+                form.reset();
+            } else {
+                // Error
+                throw new Error('Failed to send message');
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            if (statusDiv) {
+                statusDiv.textContent = 'Failed to send message. Please try again or email me directly.';
+                statusDiv.classList.add('visible', 'error');
+            }
+        } finally {
+            // Re-enable submit button
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Message';
+            }
+        }
+    });
 }
 
 // Populate Footer
@@ -269,43 +330,33 @@ function initScrollAnimations() {
     sections.forEach(section => observer.observe(section));
 }
 
-// Initialize color transitions based on scroll - INSTANT switches, no grey
+// Initialize color transitions based on scroll - abrupt switch at midpoint to avoid greying
 function initColorTransitions() {
     const root = document.documentElement;
-    let currentTheme = 'dark';
     let ticking = false;
+    let currentTheme = 'light';
 
-    // Define threshold points where colors instantly switch
-    const thresholds = [
-        { scrollPercent: 0.15, theme: 'light' },     // Switch to white at 15%
-        { scrollPercent: 0.40, theme: 'dark' },      // Switch to black at 40%
-        { scrollPercent: 0.65, theme: 'light' },     // Switch to white at 65%
-        { scrollPercent: 0.90, theme: 'dark' }       // Switch to black at 90%
-    ];
+    // Start with white theme
+    root.style.setProperty('--color-bg', '#ffffff');
+    root.style.setProperty('--color-fg', '#000000');
 
     function updateColors() {
         const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
         const scrollProgress = Math.min(Math.max(window.scrollY / scrollHeight, 0), 1);
 
-        // Determine which theme we should be in
-        let targetTheme = 'dark'; // Start with dark
+        // Abrupt switch at 50% to avoid uncomfortable greying
+        // This ensures text is always readable
+        const targetTheme = scrollProgress < 0.5 ? 'light' : 'dark';
 
-        for (const threshold of thresholds) {
-            if (scrollProgress >= threshold.scrollPercent) {
-                targetTheme = threshold.theme;
-            }
-        }
-
-        // Only update if theme changed (instant switch, no interpolation)
         if (targetTheme !== currentTheme) {
             currentTheme = targetTheme;
 
-            if (currentTheme === 'dark') {
-                root.style.setProperty('--color-bg', '#000000');
-                root.style.setProperty('--color-fg', '#ffffff');
-            } else {
+            if (currentTheme === 'light') {
                 root.style.setProperty('--color-bg', '#ffffff');
                 root.style.setProperty('--color-fg', '#000000');
+            } else {
+                root.style.setProperty('--color-bg', '#000000');
+                root.style.setProperty('--color-fg', '#ffffff');
             }
         }
 
@@ -313,7 +364,6 @@ function initColorTransitions() {
     }
 
     // Throttle scroll events for better performance
-    let scrollTimeout;
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(updateColors);
