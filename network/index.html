@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Business Card</title>
+
+  <!--
+    SETUP:
+    - Place info.json in the same directory as this HTML file
+    - Optional: Create a /public folder with avatar.jpg and icons/*.svg
+    - QR code will auto-generate from your website URL or vCard data
+  -->
+
+  <!-- QR Code Generation Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       TYPOGRAPHY - Distinctive pairing for premium feel
+       ═══════════════════════════════════════════════════════════ */
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600&display=swap');
+
+    /* ═══════════════════════════════════════════════════════════
+       DESIGN SYSTEM - Premium minimal with warm sophistication
+       ═══════════════════════════════════════════════════════════ */
+    :root {
+      /* Colors - Warm, sophisticated, not cold tech */
+      --bg-primary: #FDFCFA;
+      --bg-card: #FFFFFF;
+      --bg-elevated: #FFFFFF;
+      --text-primary: #1C1917;
+      --text-secondary: #57534E;
+      --text-tertiary: #A8A29E;
+      --accent-primary: #D97706;
+      --accent-soft: #FEF3C7;
+      --accent-hover: #B45309;
+      --border-subtle: rgba(0, 0, 0, 0.06);
+      --shadow-soft: rgba(0, 0, 0, 0.04);
+      --shadow-medium: rgba(0, 0, 0, 0.08);
+      --shadow-strong: rgba(0, 0, 0, 0.12);
+
+      /* Typography */
+      --font-display: 'Fraunces', serif;
+      --font-body: 'DM Sans', -apple-system, sans-serif;
+
+      /* Spacing rhythm */
+      --space-xs: 0.5rem;
+      --space-sm: 0.75rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+
+      /* Animation */
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --duration-fast: 200ms;
+      --duration-normal: 350ms;
+      --duration-slow: 600ms;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════════════════════════ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Subtle grain texture for depth */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.03;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' /%3E%3C/svg%3E");
+      z-index: 1;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CONTAINER & LAYOUT - Full screen immersive
+       ═══════════════════════════════════════════════════════════ */
+    .container {
+      min-height: 100vh;
+      width: 100%;
+      max-width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      background: var(--bg-card);
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-content {
+      width: 100%;
+      max-width: 480px;
+      padding: var(--space-xl) var(--space-lg);
+      margin: 0 auto;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       QR CODE SECTION - 3D Premium Effect
+       ═══════════════════════════════════════════════════════════ */
+    .qr-section {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--space-xl);
+      animation: fadeInScale 1s var(--ease-smooth) backwards;
+      animation-delay: 0s;
+      perspective: 1000px;
+    }
+
+    .qr-code {
+      padding: var(--space-lg);
+      background: white;
+      border-radius: 24px;
+      border: 3px solid var(--accent-primary);
+      box-shadow:
+        0 2px 8px var(--shadow-soft),
+        0 8px 24px var(--shadow-medium),
+        0 20px 40px var(--shadow-soft),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform var(--duration-normal) var(--ease-smooth);
+    }
+
+    /* 3D border effect */
+    .qr-code::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 27px;
+      background: linear-gradient(135deg,
+        var(--accent-primary) 0%,
+        var(--accent-hover) 50%,
+        var(--accent-primary) 100%
+      );
+      z-index: -1;
+      opacity: 0.3;
+      filter: blur(8px);
+    }
+
+    /* Inner shadow for depth */
+    .qr-code::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.08);
+      pointer-events: none;
+    }
+
+    .qr-code canvas,
+    .qr-code img {
+      display: block;
+      border-radius: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Subtle hover tilt effect */
+    .qr-code:hover {
+      transform: translateY(-4px) rotateX(5deg);
+      box-shadow:
+        0 4px 12px var(--shadow-soft),
+        0 12px 32px var(--shadow-medium),
+        0 24px 48px var(--shadow-soft),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HERO SECTION
+       ═══════════════════════════════════════════════════════════ */
+    .hero {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+      animation: fadeInUp 0.8s var(--ease-smooth) backwards;
+      animation-delay: 0.15s;
+    }
+
+    .name {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: var(--space-xs);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Subtle accent underline */
+    .tagline::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg,
+        transparent,
+        var(--accent-primary),
+        transparent
+      );
+      opacity: 0.3;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       ABOUT SECTION
+       ═══════════════════════════════════════════════════════════ */
+    .about {
+      margin-bottom: var(--space-xl);
+      animation: fadeInUp 0.8s var(--ease-smooth) backwards;
+      animation-delay: 0.3s;
+    }
+
+    .about-text {
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      text-align: center;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HIGHLIGHTS
+       ═══════════════════════════════════════════════════════════ */
+    .highlights {
+      margin-bottom: var(--space-2xl);
+      animation: fadeInUp 0.8s var(--ease-smooth) backwards;
+      animation-delay: 0.45s;
+    }
+
+    .highlights-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .highlight-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .highlight-item::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 0.5em;
+      opacity: 0.6;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       LINKS SECTION - Immersive, borderless
+       ═══════════════════════════════════════════════════════════ */
+    .links {
+      display: flex;
+      flex-direction: column;
+      animation: fadeInUp 0.8s var(--ease-smooth) backwards;
+      animation-delay: 0.6s;
+      margin-top: var(--space-2xl);
+      width: 100%;
+    }
+
+    .link-button {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-lg) var(--space-lg);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border-subtle);
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 1rem;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      position: relative;
+      cursor: pointer;
+
+      /* Touch-friendly */
+      min-height: 64px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .link-button:first-child {
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .link-button:last-child {
+      border-bottom: none;
+      padding-bottom: var(--space-3xl);
+    }
+
+    /* Immersive background gradient on hover */
+    .link-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg,
+        transparent,
+        var(--accent-soft),
+        transparent
+      );
+      opacity: 0.5;
+      transition: left 0.6s var(--ease-smooth);
+      z-index: 0;
+    }
+
+    .link-button:hover::before,
+    .link-button:focus::before {
+      left: 100%;
+    }
+
+    /* Subtle background on hover */
+    .link-button:hover,
+    .link-button:focus {
+      background: var(--accent-soft);
+      color: var(--text-primary);
+    }
+
+    .link-button:active {
+      transform: scale(0.98);
+      transition-duration: 100ms;
+    }
+
+    .link-button:focus-visible {
+      outline: none;
+      background: var(--accent-soft);
+    }
+
+    .link-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      background: var(--accent-soft);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      position: relative;
+      z-index: 2;
+    }
+
+    .link-button:hover .link-icon,
+    .link-button:focus .link-icon {
+      background: var(--accent-primary);
+      transform: scale(1.1) rotate(-5deg);
+    }
+
+    .link-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      position: relative;
+      z-index: 2;
+    }
+
+    .link-label {
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .link-badge {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      padding: 0.25rem 0.625rem;
+      background: var(--accent-primary);
+      color: white;
+      border-radius: 6px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       ICON GLYPHS - Simple SVG-like shapes with emojis as fallback
+       ═══════════════════════════════════════════════════════════ */
+    .icon-profile::before { content: '👤'; }
+    .icon-email::before { content: '✉️'; }
+    .icon-linkedin::before { content: '💼'; }
+    .icon-document::before { content: '📄'; }
+    .icon-github::before { content: '⚡'; }
+    .icon-twitter::before { content: '🐦'; }
+    .icon-default::before { content: '🔗'; }
+
+    /* ═══════════════════════════════════════════════════════════
+       ANIMATIONS - Cinematic entrance
+       ═══════════════════════════════════════════════════════════ */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px) translateZ(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) translateZ(0);
+      }
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.85) translateZ(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateZ(0);
+      }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* Loading state */
+    .loading {
+      text-align: center;
+      padding: var(--space-3xl);
+      color: var(--text-tertiary);
+      font-size: 0.875rem;
+      animation: pulse 2s var(--ease-smooth) infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* Error state */
+    .error {
+      text-align: center;
+      padding: var(--space-2xl);
+      color: #DC2626;
+      font-size: 0.875rem;
+      background: #FEE2E2;
+      border-radius: 12px;
+      border: 1px solid #FCA5A5;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       EMAIL PROMPT MODAL
+       ═══════════════════════════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: var(--space-lg);
+      opacity: 0;
+      animation: fadeIn 0.3s var(--ease-smooth) forwards;
+    }
+
+    .modal-overlay.hidden {
+      display: none;
+    }
+
+    .modal {
+      background: var(--bg-card);
+      border-radius: 24px;
+      padding: var(--space-2xl);
+      max-width: 400px;
+      width: 100%;
+      box-shadow:
+        0 4px 16px var(--shadow-medium),
+        0 16px 48px var(--shadow-strong);
+      border: 1px solid var(--border-subtle);
+      transform: scale(0.9) translateY(20px);
+      animation: modalSlideIn 0.4s var(--ease-smooth) forwards;
+      animation-delay: 0.1s;
+    }
+
+    .modal-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--accent-soft);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto var(--space-lg);
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: var(--space-sm);
+      color: var(--text-primary);
+    }
+
+    .modal-message {
+      font-size: 0.9375rem;
+      text-align: center;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: var(--space-xl);
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .modal-button {
+      flex: 1;
+      padding: var(--space-md) var(--space-lg);
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      border: none;
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-smooth);
+      font-family: var(--font-body);
+      min-height: 48px;
+    }
+
+    .modal-button-primary {
+      background: var(--accent-primary);
+      color: white;
+      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3);
+    }
+
+    .modal-button-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
+    }
+
+    .modal-button-primary:active {
+      transform: translateY(0);
+    }
+
+    .modal-button-secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1.5px solid var(--border-subtle);
+    }
+
+    .modal-button-secondary:hover {
+      background: var(--bg-elevated);
+      border-color: var(--text-tertiary);
+      color: var(--text-primary);
+    }
+
+    .modal-button-secondary:active {
+      transform: scale(0.98);
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes modalSlideIn {
+      to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       REDUCED MOTION
+       ═══════════════════════════════════════════════════════════ */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .card {
+        transform: none !important;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESPONSIVE - Desktop refinements
+       ═══════════════════════════════════════════════════════════ */
+    @media (min-width: 640px) {
+      .hero {
+        margin-bottom: var(--space-3xl);
+      }
+
+      .name {
+        font-size: 3rem;
+      }
+
+      .tagline {
+        font-size: 1.125rem;
+      }
+
+      .about-text {
+        font-size: 1rem;
+      }
+
+      .card-content {
+        padding: var(--space-3xl) var(--space-2xl);
+      }
+
+      .link-button {
+        font-size: 1.0625rem;
+        padding: var(--space-xl) var(--space-2xl);
+        min-height: 72px;
+      }
+
+      .link-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+      }
+
+      .qr-code {
+        padding: var(--space-xl);
+      }
+
+      .qr-section {
+        margin-bottom: var(--space-2xl);
+      }
+    }
+
+    /* Desktop - Constrain width */
+    @media (min-width: 768px) {
+      .card {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .link-button {
+        padding: var(--space-xl) var(--space-2xl);
+      }
+    }
+
+    /* Large desktop - More breathing room */
+    @media (min-width: 1024px) {
+      .card {
+        max-width: 1000px;
+      }
+
+      .card-content {
+        max-width: 600px;
+      }
+
+      .link-button {
+        padding: var(--space-xl) var(--space-3xl);
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       DARK MODE SUPPORT (respects system preference)
+       ═══════════════════════════════════════════════════════════ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary: #0C0A09;
+        --bg-card: #1C1917;
+        --bg-elevated: #292524;
+        --text-primary: #FAFAF9;
+        --text-secondary: #D6D3D1;
+        --text-tertiary: #78716C;
+        --accent-primary: #F59E0B;
+        --accent-soft: #451A03;
+        --accent-hover: #FCD34D;
+        --border-subtle: rgba(255, 255, 255, 0.08);
+        --shadow-soft: rgba(0, 0, 0, 0.3);
+        --shadow-medium: rgba(0, 0, 0, 0.5);
+        --shadow-strong: rgba(0, 0, 0, 0.7);
+      }
+
+      body::before {
+        opacity: 0.05;
+      }
+
+      .qr-code {
+        background: #FFFFFF;
+        border-color: var(--accent-primary);
+      }
+
+      .qr-code::before {
+        opacity: 0.2;
+      }
+
+      .modal {
+        background: var(--bg-elevated);
+      }
+
+      .modal-button-primary {
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+      }
+
+      .modal-button-primary:hover {
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.5);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Email Prompt Modal -->
+  <div class="modal-overlay hidden" id="emailModal">
+    <div class="modal">
+      <div class="modal-icon">✉️</div>
+      <h2 class="modal-title">Get in Touch?</h2>
+      <p class="modal-message">Would you like to send an email and start a conversation?</p>
+      <div class="modal-buttons">
+        <button class="modal-button modal-button-secondary" id="modalNo">Not Now</button>
+        <button class="modal-button modal-button-primary" id="modalYes">Let's Connect</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card" id="card">
+      <!-- Content will be injected here by JavaScript -->
+      <div class="loading">Loading...</div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════
+    // DATA LOADING & INITIALIZATION
+    // ═══════════════════════════════════════════════════════════
+
+    const card = document.getElementById('card');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Email modal state
+    let emailLink = null;
+    const MODAL_DISMISS_KEY = 'emailModalDismissed';
+    const DISMISS_DURATION = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+
+    // Icon mapping
+    const iconMap = {
+      'profile': 'icon-profile',
+      'email': 'icon-email',
+      'linkedin': 'icon-linkedin',
+      'document': 'icon-document',
+      'github': 'icon-github',
+      'twitter': 'icon-twitter',
+      'default': 'icon-default'
+    };
+
+    // ═══════════════════════════════════════════════════════════
+    // EMAIL MODAL MANAGEMENT
+    // ═══════════════════════════════════════════════════════════
+
+    function shouldShowEmailModal() {
+      const dismissedAt = localStorage.getItem(MODAL_DISMISS_KEY);
+      if (!dismissedAt) return true;
+
+      const timeSinceDismissed = Date.now() - parseInt(dismissedAt, 10);
+      return timeSinceDismissed > DISMISS_DURATION;
+    }
+
+    function showEmailModal() {
+      if (!emailLink) {
+        console.warn('No email link available');
+        return;
+      }
+
+      if (!shouldShowEmailModal()) {
+        console.log('Email modal dismissed recently, not showing');
+        return;
+      }
+
+      const modal = document.getElementById('emailModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+      }
+    }
+
+    function hideEmailModal() {
+      const modal = document.getElementById('emailModal');
+      if (modal) {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function dismissEmailModal() {
+      localStorage.setItem(MODAL_DISMISS_KEY, Date.now().toString());
+      hideEmailModal();
+    }
+
+    function initEmailModal() {
+      const modalYes = document.getElementById('modalYes');
+      const modalNo = document.getElementById('modalNo');
+      const modalOverlay = document.getElementById('emailModal');
+
+      if (modalYes) {
+        modalYes.addEventListener('click', () => {
+          if (emailLink) {
+            window.location.href = emailLink;
+          }
+          hideEmailModal();
+        });
+      }
+
+      if (modalNo) {
+        modalNo.addEventListener('click', () => {
+          dismissEmailModal();
+        });
+      }
+
+      // Close on overlay click
+      if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+          if (e.target === modalOverlay) {
+            dismissEmailModal();
+          }
+        });
+      }
+
+      // Close on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modalOverlay.classList.contains('hidden')) {
+          dismissEmailModal();
+        }
+      });
+    }
+
+    // Fetch and render data
+    async function loadData() {
+      try {
+        const response = await fetch('./info.json');
+        if (!response.ok) {
+          throw new Error(`Failed to load data: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Data loaded successfully:', data);
+
+        // Extract email link for modal
+        const emailLinkData = data.links?.find(link =>
+          link.url?.startsWith('mailto:')
+        );
+        if (emailLinkData) {
+          emailLink = emailLinkData.url;
+        }
+
+        renderCard(data);
+
+        // Initialize interactions after render
+        if (!prefersReducedMotion) {
+          init3DTilt();
+        }
+
+        // Show email modal after a short delay (let animations complete)
+        setTimeout(() => {
+          showEmailModal();
+        }, 2000);
+      } catch (error) {
+        console.error('Error loading data:', error);
+        card.innerHTML = `
+          <div class="error">
+            <p><strong>Unable to load business card</strong></p>
+            <p style="margin-top: 0.5rem; font-size: 0.8125rem;">Error: ${error.message}</p>
+          </div>
+        `;
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // RENDER FUNCTIONS
+    // ═══════════════════════════════════════════════════════════
+
+    function renderCard(data) {
+      try {
+        const { name, tagline, about, highlights, links } = data;
+
+        card.innerHTML = `
+          <div class="card-content">
+            <!-- QR Code Section -->
+            <div class="qr-section">
+              <div class="qr-code" id="qrcode"></div>
+            </div>
+
+            ${name || tagline ? `
+              <div class="hero">
+                ${name ? `<h1 class="name">${escapeHtml(name)}</h1>` : ''}
+                ${tagline ? `<p class="tagline">${escapeHtml(tagline)}</p>` : ''}
+              </div>
+            ` : ''}
+
+            ${about ? `
+              <div class="about">
+                <p class="about-text">${escapeHtml(about)}</p>
+              </div>
+            ` : ''}
+
+            ${highlights && highlights.length > 0 ? `
+              <div class="highlights">
+                <ul class="highlights-list">
+                  ${highlights.map(highlight => `
+                    <li class="highlight-item">${escapeHtml(highlight)}</li>
+                  `).join('')}
+                </ul>
+              </div>
+            ` : ''}
+          </div>
+
+          ${links && links.length > 0 ? `
+            <div class="links">
+              ${links.map(link => renderLink(link)).join('')}
+            </div>
+          ` : ''}
+        `;
+
+        console.log('Card rendered successfully');
+
+        // Generate QR code after rendering (with slight delay to ensure DOM is ready)
+        setTimeout(() => {
+          generateQRCode(data);
+        }, 100);
+      } catch (error) {
+        console.error('Error rendering card:', error);
+        throw error; // Re-throw so loadData can catch it
+      }
+    }
+
+    function renderLink(link) {
+      if (!link.url) return '';
+
+      const iconClass = iconMap[link.icon?.toLowerCase()] || iconMap.default;
+      const label = link.label || 'Link';
+      const badge = link.badge ? `<span class="link-badge">${escapeHtml(link.badge)}</span>` : '';
+
+      return `
+        <a href="${escapeHtml(link.url)}"
+           class="link-button"
+           target="${link.url.startsWith('http') ? '_blank' : '_self'}"
+           rel="${link.url.startsWith('http') ? 'noopener noreferrer' : ''}">
+          <div class="link-icon ${iconClass}"></div>
+          <div class="link-content">
+            <span class="link-label">${escapeHtml(label)}</span>
+            ${badge}
+          </div>
+        </a>
+      `;
+    }
+
+    function escapeHtml(unsafe) {
+      if (typeof unsafe !== 'string') return '';
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // QR CODE GENERATION
+    // ═══════════════════════════════════════════════════════════
+
+    function generateQRCode(data) {
+      try {
+        const qrContainer = document.getElementById('qrcode');
+        if (!qrContainer) {
+          console.warn('QR container not found');
+          return;
+        }
+
+        // Clear any existing QR code
+        qrContainer.innerHTML = '';
+
+        // Use current page URL for QR code
+        const currentUrl = window.location.href;
+        const qrData = currentUrl;
+
+        console.log('Generating QR code for URL:', qrData);
+
+        // Generate QR code
+        if (typeof QRCode !== 'undefined') {
+          new QRCode(qrContainer, {
+            text: qrData,
+            width: 160,
+            height: 160,
+            colorDark: '#1C1917',
+            colorLight: '#FFFFFF',
+            correctLevel: QRCode.CorrectLevel.M
+          });
+          console.log('QR code generated successfully');
+        } else {
+          // Fallback if QRCode library fails to load
+          console.warn('QRCode library not loaded, using fallback');
+          qrContainer.innerHTML = '<div style="width: 160px; height: 160px; background: #F5F5F4; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #78716C; text-align: center; padding: 1rem;">QR Code<br/>Loading...</div>';
+        }
+      } catch (error) {
+        console.error('Error generating QR code:', error);
+        // Don't throw - just show fallback
+        const qrContainer = document.getElementById('qrcode');
+        if (qrContainer) {
+          qrContainer.innerHTML = '<div style="width: 160px; height: 160px; background: #F5F5F4; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #78716C; text-align: center; padding: 1rem;">QR Code</div>';
+        }
+      }
+    }
+
+    function generateVCard(data) {
+      const { name, tagline, about, links } = data;
+
+      // Extract contact information from links
+      const phone = links?.find(l => l.url?.startsWith('tel:'))?.url.replace('tel:', '');
+      const email = links?.find(l => l.url?.startsWith('mailto:'))?.url.split('?')[0].replace('mailto:', '');
+      const website = links?.find(l => l.label?.toLowerCase().includes('website'))?.url;
+      const linkedin = links?.find(l => l.label?.toLowerCase().includes('linkedin'))?.url;
+
+      // Generate vCard 3.0 format
+      let vcard = 'BEGIN:VCARD\nVERSION:3.0\n';
+
+      if (name) {
+        const nameParts = name.split(' ');
+        const firstName = nameParts[0] || '';
+        const lastName = nameParts.slice(1).join(' ') || '';
+        vcard += `N:${lastName};${firstName};;;\n`;
+        vcard += `FN:${name}\n`;
+      }
+
+      if (tagline) {
+        vcard += `TITLE:${tagline}\n`;
+      }
+
+      if (email) {
+        vcard += `EMAIL:${email}\n`;
+      }
+
+      if (phone) {
+        vcard += `TEL:${phone}\n`;
+      }
+
+      if (website) {
+        vcard += `URL:${website}\n`;
+      }
+
+      if (about) {
+        vcard += `NOTE:${about.replace(/\n/g, '\\n')}\n`;
+      }
+
+      vcard += 'END:VCARD';
+
+      return vcard;
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // 3D TILT EFFECT - Device orientation (mobile) + pointer (desktop)
+    // ═══════════════════════════════════════════════════════════
+
+    function init3DTilt() {
+      let tiltX = 0;
+      let tiltY = 0;
+      let currentX = 0;
+      let currentY = 0;
+
+      const maxTilt = 8; // Maximum tilt angle in degrees
+      const smoothing = 0.1; // Lower = smoother but slower
+
+      // Device orientation for mobile
+      if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission !== 'function') {
+        window.addEventListener('deviceorientation', (e) => {
+          if (e.beta !== null && e.gamma !== null) {
+            // Beta: front-back tilt (-180 to 180)
+            // Gamma: left-right tilt (-90 to 90)
+            tiltX = Math.max(-maxTilt, Math.min(maxTilt, e.gamma / 3));
+            tiltY = Math.max(-maxTilt, Math.min(maxTilt, e.beta / 3));
+          }
+        });
+      }
+
+      // Pointer tracking for desktop
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        // Calculate tilt based on mouse position relative to center
+        tiltX = ((e.clientX - centerX) / rect.width) * maxTilt * 2;
+        tiltY = ((e.clientY - centerY) / rect.height) * maxTilt * 2;
+      });
+
+      // Reset on mouse leave
+      card.addEventListener('mouseleave', () => {
+        tiltX = 0;
+        tiltY = 0;
+      });
+
+      // Smooth animation loop
+      function animate() {
+        // Lerp for smooth transition
+        currentX += (tiltX - currentX) * smoothing;
+        currentY += (tiltY - currentY) * smoothing;
+
+        // Apply transform
+        card.style.transform = `
+          perspective(1500px)
+          rotateX(${-currentY}deg)
+          rotateY(${currentX}deg)
+          scale3d(1, 1, 1)
+        `;
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════════════════════════
+
+    // Add global error handler for debugging
+    window.addEventListener('error', (e) => {
+      console.error('Global error:', e.error);
+    });
+
+    // Initialize email modal handlers
+    initEmailModal();
+
+    // Load data when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadData);
+    } else {
+      loadData();
+    }
+
+    // Log when QRCode library is loaded
+    window.addEventListener('load', () => {
+      console.log('Window loaded. QRCode available:', typeof QRCode !== 'undefined');
+    });
+  </script>
+</body>
+</html>

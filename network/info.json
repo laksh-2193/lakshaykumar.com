@@ -1,0 +1,39 @@
+{
+  "name": "Lakshay Kumar",
+  "tagline": "Generative AI Engineer • Founder",
+  "about": "I design and build production-ready GenAI systems—agents, automation pipelines, and AI-powered products. Currently working at the intersection of AI, fintech, and SaaS, with a strong focus on turning messy real-world problems into clean, usable tools.",
+  "highlights": [
+    "GenAI, LLM agents, automation & backend systems",
+    "Founder of DocIQ — a document intelligence & sharing platform",
+    "Hands-on with Python, FastAPI, cloud infrastructure, and data pipelines",
+    "Builder mindset: ship fast, iterate hard, optimize for impact"
+  ],
+  "links": [
+    {
+      "label": "Call",
+      "url": "tel:+918595984485",
+      "icon": "profile"
+    },
+    {
+      "label": "Email",
+      "url": "mailto:connect@lakshaykumar.com?subject=Let's%20Connect&body=Hi%20Lakshay%2C%0A%0AWould%20love%20to%20connect.",
+      "icon": "email"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/lakshaykumar-tech/",
+      "icon": "linkedin"
+    },
+    {
+      "label": "DocIQ",
+      "url": "https://www.dociq.space/",
+      "icon": "document",
+      "badge": "SaaS"
+    },
+    {
+      "label": "Website",
+      "url": "https://lakshaykumar.com/",
+      "icon": "profile"
+    }
+  ]
+}
