@@ -1,97 +1,121 @@
 {
   "portfolio": {
     "name": "Lakshay Kumar",
-    "title": "Lakshay Kumar - Portfolio",
-    "aliases": [
-      "@alphic"
-    ],
+    "title": "Lakshay Kumar — Generative AI Engineer & Founder | Bangalore",
+    "seo": {
+      "description": "Lakshay Kumar is a Generative AI engineer and founder in Bangalore. Full-time at Zato. Shipping DocIQ and Hyd/Rent on the side. Always up for a good conversation about AI, products, and the messy middle.",
+      "keywords": [
+        "Generative AI engineer",
+        "LLM engineer Bangalore",
+        "AI product builder India",
+        "LangChain engineer",
+        "agentic workflows",
+        "prompt engineering",
+        "full-stack AI",
+        "Claude API",
+        "OpenAI integration",
+        "FastAPI",
+        "DocIQ",
+        "Hyd/Rent",
+        "Zato"
+      ]
+    },
+    "aliases": ["@alphic"],
     "cta": {
-      "primary": "Let's chat",
-      "secondary": "FREE : I'll help you build a no-cost prototype",
-      "link_text": "Let's talk"
+      "primary": "Say hello",
+      "secondary": "Working full-time at Zato — always up for a good conversation. No pitch, no retainer.",
+      "link_text": "Let's talk."
     },
     "intro": {
       "emoji": "👋🏻",
-      "tagline": "Something exciting you might like!",
-      "highlight": {
-        "product": "DocIQ",
-        "description": "Make your PDFs interactive and engaging",
-        "url": "https://www.dociq.space/"
-      }
-    },
-    "about": {
-      "section_title": "Who am I ?",
-      "summary": [
-        "Interested in thoughtful tech, curious conversations, and building things that matter.",
-        "Focused on solving real-world problems with empathy, detail, and intentional design.",
-        "Works at the intersection of technology and possibility, turning ideas into products and prompts into conversations.",
-        "Enjoys writing clean, purposeful code, experimenting with AI systems, and making technology feel more human."
-      ],
-      "identity": "Generative AI engineer and founder who enjoys building thoughtful solutions with creativity."
-    },
-    "skill_set": [
-      "Making AI sound smart (and occasionally funny)",
-      "Turning vague ideas into working products",
-      "Writing code that doesn't hate future me",
-      "Automating things so humans don't have to",
-      "Shipping fast, fixing bugs faster (usually)"
-    ],
-    "services": {
-      "section_title": "How can I help you?",
-      "offerings": [
+      "tagline": "Generative AI engineer and founder. Building AI that feels human.",
+      "highlight": [
         {
-          "title": "Generative AI & LLM Integration",
-          "description": "Designing and deploying systems that leverage large language models for smart automation and meaningful conversation interfaces."
+          "title": "DocIQ",
+          "description": "Turn static PDFs into interactive, chat-ready documents. Built for teams who read more than they write.",
+          "url": "https://www.dociq.space/",
+          "tag": "Currently shipping"
         },
         {
-          "title": "Product Thinking with a Builder's Mindset",
-          "description": "Balancing speed and precision to turn early ideas into usable, scalable products with strong UX and clarity."
+          "title": "Hyd/Rent",
+          "description": "A unified rental platform for Hyderabad — one place for homes, roommates, deposits, and listings that don't waste your evening.",
+          "url": "https://hyd-rent.vercel.app/",
+          "tag": "Live"
+        }
+      ]
+    },
+    "about": {
+      "section_title": "About.",
+      "summary": [
+        "I build AI products end-to-end — from the prompt layer to the API surface to the interface the user actually sees. Five years in, shipped at six companies, launched a dozen products across AI, SaaS, and automation.",
+        "I care about the small moments: a loading state that tells the truth, a prompt that returns in one try, a page that loads before you notice. The craft is in the friction you remove.",
+        "My work sits at the intersection of LLMs, product thinking, and fast iteration. I write Python and TypeScript, prototype in a day, ship in a week, and iterate with the user in the room.",
+        "Currently Generative AI Engineer at Zato and founder of DocIQ. Previously shipped at GAIT Global, Atria Foundation, and HealthArk Insights."
+      ],
+      "identity": "Generative AI engineer and founder who turns vague ideas into working products — fast, deliberate, human."
+    },
+    "skill_set": [
+      "LLM integration that survives production",
+      "Agentic workflows that actually finish the task",
+      "Prompts tuned for cost, latency, and accuracy",
+      "Full-stack AI: backend, frontend, infra",
+      "Turning weekend ideas into shipped products"
+    ],
+    "services": {
+      "section_title": "What I'm good at.",
+      "offerings": [
+        {
+          "title": "Generative AI & LLM Systems",
+          "description": "Design and deploy production-grade LLM systems — RAG pipelines, agentic workflows, and conversational interfaces with Claude, GPT-4, and open-source models. Tuned for cost, latency, and reliability."
+        },
+        {
+          "title": "AI Product Thinking",
+          "description": "I bring builder instincts to early-stage thinking — scope, model choice, UX, and launch plan. The kind of feedback that helps your first version actually ship."
         },
         {
           "title": "Full-Stack Engineering",
-          "description": "Backend APIs to clean frontends with attention to performance, maintainability, and elegance."
+          "description": "FastAPI, Python, TypeScript, React, Next.js. Clean backends, considered frontends, observable infrastructure. The kind of codebase future-you can extend."
         },
         {
-          "title": "Automation & Workflow Design",
-          "description": "Building intelligent systems that reduce friction and combine human judgment with AI."
+          "title": "Automation & Agentic Workflows",
+          "description": "Turning manual toil into intelligent automations. LangChain, function-calling, tool use, and structured output. Humans stay in the loop where it matters."
         },
         {
-          "title": "Startup-Ready Execution",
-          "description": "Comfortable wearing multiple hats, from system architecture to writing launch copy that sounds human."
+          "title": "Product Building, 0 → 1",
+          "description": "Founder-mode execution on my own things — DocIQ, Hyd/Rent. Architecture, AI feature prioritization, launch copy that sounds human, and the loop between ship-and-learn."
         }
       ]
     },
     "skills": {
       "automation": [
-        "Task Automation with AI",
-        "Workflow Orchestration (Zapier, Python scripts)",
-        "Prompt Design for Agents",
-        "Agentic Workflows (Auto-GPT style)",
-        "LangChain / OpenRouter / Claude API Integration"
+        "LLM orchestration (LangChain, LlamaIndex)",
+        "Agent design (tool use, function calling, ReAct)",
+        "Prompt engineering & evaluation",
+        "RAG pipelines & vector databases",
+        "Workflow automation (Python, n8n, Zapier)"
       ],
       "entrepreneurship": [
-        "Pitch Deck Design",
-        "Tech Product Design",
-        "Tech Product Development",
-        "Product Ideation",
-        "Prototyping"
+        "Product ideation & validation",
+        "MVP prototyping",
+        "Pitch deck & narrative design",
+        "Go-to-market for technical products",
+        "Founder-led sales"
       ],
       "social_skills": [
-        "Team Leadership",
-        "Prompt Engineering",
-        "Public Speaking",
-        "Communication"
+        "Team leadership",
+        "Cross-functional collaboration",
+        "Technical writing",
+        "Public speaking & demos"
       ],
       "technical_skills": [
-        "Market Research & Validation",
-        "Product-Market Fit Discovery",
-        "Web Scraping",
-        "Tensorflow & PyTorch",
-        "SQL & NoSQL Databases",
-        "API Design & Integration",
-        "Machine Learning",
-        "FastAPI",
-        "Python"
+        "Python, TypeScript, FastAPI",
+        "Claude, OpenAI, Anthropic API",
+        "PostgreSQL, Pinecone, Weaviate",
+        "TensorFlow, PyTorch",
+        "React, Next.js, Tailwind",
+        "AWS, Vercel, Cloudflare",
+        "Web scraping & data engineering",
+        "API design & integration"
       ]
     },
     "experience": [
@@ -139,30 +163,68 @@
       }
     ],
     "experiments": {
-      "section_title": "Things I Tried (And Learned From)",
+      "section_title": "Things I tried, and what they taught me.",
       "projects": [
         {
           "name": "Techuro",
-          "lesson": "Strong vision, but early execution lacked product-market fit and momentum."
+          "lesson": "Strong vision isn't enough. Without early product-market fit and clear distribution, momentum dies in the demo."
         },
         {
           "name": "Eve-Link",
-          "lesson": "Underestimated the difficulty of changing human behavior in live networking settings."
+          "lesson": "Changing live networking behavior is brutally hard. Tech can assist the moment, not replace it."
         },
         {
           "name": "NFC Smart Cards",
-          "lesson": "Cool idea, but hard to monetize without a must-have use case and easy to copy."
+          "lesson": "Cool hardware means nothing without a must-have use case and easy to copy."
         },
         {
           "name": "Linky",
-          "description": "Job automation tool"
+          "description": "Job application automation for early-career engineers. Learned that speed without signal hurts more than it helps."
         }
       ]
     },
+    "linkedin-embeds": [
+      "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7446436189643104257?collapsed=1",
+      "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7444012142070239232?collapsed=1",
+      "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7382163130560299008?collapsed=1",
+      "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7370842034783526912?collapsed=1",
+      "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7319606035147542528?collapsed=1",
+      "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7316716888590295040?collapsed=1"
+    ],
+    "faqs": [
+      {
+        "q": "What do you build, exactly?",
+        "a": "Generative AI products and features — LLM integrations, agentic workflows, RAG pipelines, and the full-stack surface around them. At Zato I work on AI infrastructure and products. On the side I ship my own things — DocIQ (an interactive PDF assistant) and Hyd/Rent (a unified rental platform for Hyderabad)."
+      },
+      {
+        "q": "Are you available to talk?",
+        "a": "Yes — always up for a good conversation. I'm full-time at Zato, but I love meeting other builders, engineers, founders, and anyone doing interesting work in AI or products. No pitch required. Just say hi."
+      },
+      {
+        "q": "What kinds of conversations do you enjoy?",
+        "a": "Early product ideas you're stuck on, LLM architecture choices, prompt evaluation strategies, the pain of shipping AI features, and the messy middle of going 0→1. I'll share what I know honestly — and tell you when I don't."
+      },
+      {
+        "q": "Where are you based and how do you work?",
+        "a": "Bangalore, India (UTC+5:30). I collaborate with folks globally — mostly async, Loom-friendly, comfortable overlapping a few hours. Happy to jump on a call or just trade voice notes."
+      },
+      {
+        "q": "Which models and stacks do you work with?",
+        "a": "Claude (Anthropic), GPT-4 and GPT-4o (OpenAI), plus open-source Llama and Mistral models. Orchestration with LangChain and LlamaIndex. On the app side: Python, FastAPI, TypeScript, React, Next.js, PostgreSQL, and vector databases like Pinecone and Weaviate. I pick the stack that ships fastest for the constraints at hand."
+      },
+      {
+        "q": "Do you mentor or advise?",
+        "a": "Informally, yes — I enjoy talking shop with other engineers, early-career devs, and first-time founders. If you're building something in AI or full-stack product land and want a second opinion, drop a message."
+      },
+      {
+        "q": "What's the fastest way to reach you?",
+        "a": "The form below, or email directly — hey@lakshaykumar.tech. I reply to everything within 24 hours. LinkedIn DMs also work if you prefer."
+      }
+    ],
     "contact": {
       "email": [
         "hey@lakshaykumar.tech",
-        "connect@lakshaykumar.tech"
+        "connect@lakshaykumar.com"
       ],
       "socials": {
         "linkedin": "https://www.linkedin.com/in/lakshaykumar-tech/"
