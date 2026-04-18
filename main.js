@@ -1,7 +1,7 @@
 // Data hydration
 (async function () {
     try {
-        const res = await fetch('info.json');
+        const res = await fetch('info.json?v=2');
         const { portfolio } = await res.json();
         window.__portfolio = portfolio;
 
