@@ -12,7 +12,7 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/lakshaykumar-tech/',
   github: 'https://github.com/laksh-2193',
   description:
-    'Lakshay Kumar is a Generative AI engineer in Bangalore who builds AI products and runs public experiments on how LLMs behave. Open to conversations with founders building with AI.',
+    'Lakshay Kumar, generative AI engineer in Bangalore. Building AI products and agents, plus public experiments on how language models like Claude and GPT behave.',
   // Web3Forms public access key (safe to expose; it only allows submissions).
   formKey: '4271950e-c989-4736-968c-83da470a868b',
   // Cloudflare Web Analytics token. Paste it here to enable the beacon.

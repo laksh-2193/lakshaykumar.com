@@ -19,7 +19,6 @@ const stats = [
   { n: '12', l: 'Products launched' },
   { n: String(posts.length), l: 'Experiments published' },
 ];
-const chars = (w: string, offset = 0) => [...w].map((c, i) => ({ c, i: i + offset }));
 ---
 
 <Base
@@ -35,12 +34,13 @@ const chars = (w: string, offset = 0) => [...w].map((c, i) => ({ c, i: i + offse
       <span class="label">Bangalore, IN · UTC+5:30</span>
     </div>
 
-    <h1 class="hero__name" aria-label="Lakshay Kumar">
-      <span class="hero__line" aria-hidden="true">{chars('Lakshay').map((x) => <span class="ch" style={`--i:${x.i}`}>{x.c}</span>)}</span>
-      <span class="hero__line" aria-hidden="true">{chars('Kumar', 7).map((x) => <span class="ch" style={`--i:${x.i}`}>{x.c}</span>)}</span>
+    <h1 class="hero__h1">
+      <span class="hero__name">
+        <span class="hero__line"><span class="hero__word" style="--i:0">Lakshay</span></span>{' '}
+        <span class="hero__line"><span class="hero__word" style="--i:1">Kumar</span></span>
+      </span>{' '}
+      <span class="hero__role">Generative AI Engineer <span class="dot" aria-hidden="true"></span> Builder <span class="dot" aria-hidden="true"></span> <span class="mono muted">{site.handle}</span></span>
     </h1>
-
-    <p class="hero__role">Generative AI Engineer <span class="dot" aria-hidden="true"></span> Builder <span class="dot" aria-hidden="true"></span> <span class="mono muted">{site.handle}</span></p>
 
     <div class="hero__grid">
       <p class="lede hero__lede">I build <strong>AI products</strong>, and I test how <strong>language models</strong> behave when nobody is steering them. Then I write down what happened.</p>
@@ -168,10 +168,11 @@ const chars = (w: string, offset = 0) => [...w].map((c, i) => ({ c, i: i + offse
   /* Hero */
   .hero { padding-top: clamp(1.5rem, 4vw, 3rem); }
   .hero__meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem 2rem; padding-block: 1.25rem 0; }
-  .hero__name { font-size: clamp(5rem, 17.5vw, 17.5rem); font-weight: 900; letter-spacing: -0.055em; line-height: 0.84; margin-top: clamp(1.5rem, 4vw, 3rem); }
+  .hero__h1 { font: inherit; letter-spacing: normal; line-height: 1.2; margin-top: clamp(1.5rem, 4vw, 3rem); }
+  .hero__name { display: block; font: 900 clamp(5rem, 17.5vw, 17.5rem)/0.84 var(--display); letter-spacing: -0.055em; }
   .hero__line { display: block; overflow: hidden; padding-bottom: 0.14em; margin-bottom: -0.1em; }
-  .hero__name .ch { display: inline-block; }
-  .hero__role { display: flex; align-items: center; flex-wrap: wrap; gap: 0.625rem; margin-top: clamp(1.5rem, 3vw, 2.5rem); font-size: 1.125rem; font-weight: 500; }
+  .hero__word { display: inline-block; }
+  .hero__role { display: flex; align-items: center; flex-wrap: wrap; gap: 0.625rem; margin-top: clamp(1.5rem, 3vw, 2.5rem); font: 500 1.125rem/1.3 var(--body); letter-spacing: normal; }
   .hero__role .dot { width: 0.3125rem; height: 0.3125rem; background: var(--muted); }
   .hero__grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 2rem clamp(2rem, 6vw, 6rem); align-items: end; padding-block: clamp(3rem, 7vw, 5.5rem) clamp(4rem, 8vw, 7rem); }
   @media (max-width: 860px) { .hero__grid { grid-template-columns: 1fr; } }
@@ -179,7 +180,7 @@ const chars = (w: string, offset = 0) => [...w].map((c, i) => ({ c, i: i + offse
   .hero__cta { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
   .hero__cta .small { flex-basis: 100%; margin-top: 0.5rem; }
   @media (prefers-reduced-motion: no-preference) {
-    .hero__name .ch { animation: rise 1.1s var(--ease) both; animation-delay: calc(var(--i) * 50ms + 120ms); }
+    .hero__word { animation: rise 1.2s var(--ease) both; animation-delay: calc(var(--i) * 120ms + 120ms); }
     @keyframes rise { from { transform: translateY(112%); } }
   }
 
