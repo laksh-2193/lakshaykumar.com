@@ -261,3 +261,17 @@ body.resizing{cursor:col-resize;user-select:none}
   *{print-color-adjust:exact;-webkit-print-color-adjust:exact}
 }
 @media (max-width:900px){.left{position:absolute;z-index:40;height:calc(100vh - 140px)}.right{position:absolute;right:0;z-index:40;height:calc(100vh - 140px)}}
+
+/* ---------- PIN lock ---------- */
+body.locked #app{visibility:hidden}
+.lock{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:var(--ui-bg);padding:16px}
+.lock form{width:min(320px,100%);background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:10px;box-shadow:0 20px 60px rgba(0,0,0,.08)}
+.lock-mark{font:800 28px/1 'Archivo',sans-serif;letter-spacing:-.04em}
+.lock-mark i{font-style:normal}
+.lock h1{font:700 15px 'Archivo',sans-serif;margin:0 0 8px}
+.lock label{font:500 10px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--ui-mute)}
+.lock input{font:500 20px 'JetBrains Mono',monospace;letter-spacing:.3em;text-align:center;padding:10px;border:1px solid var(--ui-line);border-radius:8px;background:#fff}
+.lock input:focus{outline:2px solid var(--ui-ink);outline-offset:-1px}
+.lock .tb-btn{padding:10px}
+.lock .tb-btn:disabled{opacity:.6;cursor:wait}
+#lockMsg{font-size:12px;color:#B91C1C;min-height:16px;margin:0}
