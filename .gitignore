@@ -1,1 +1,5 @@
 prompt.txt
+node_modules/
+dist/
+.astro/
+.DS_Store

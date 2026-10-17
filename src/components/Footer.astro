@@ -1,0 +1,52 @@
+---
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__grid">
+      <div>
+        <p class="label">Elsewhere</p>
+        <ul>
+          <li><a href={site.linkedin} rel="me noopener" target="_blank" class="link">LinkedIn</a></li>
+          <li><a href={site.github} rel="me noopener" target="_blank" class="link">GitHub</a></li>
+          <li><a href={`mailto:${site.email}`} class="link">Email</a></li>
+          <li><a href="/rss.xml" class="link">RSS</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="label">Site</p>
+        <ul>
+          <li><a href="/writing/" class="link">Writing</a></li>
+          <li><a href="/workshops/" class="link">Workshops</a></li>
+          <li><a href="/about/" class="link">About</a></li>
+          <li><a href="/talk/" class="link">Talk to me</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="label">Colophon</p>
+        <p class="small muted">Set in Archivo, Space Grotesk and JetBrains Mono. Built with Astro in Bangalore.</p>
+      </div>
+    </div>
+  </div>
+  <div class="ftr__mark" aria-hidden="true">LAKSHAY</div>
+  <div class="wrap ftr__base mono muted">
+    <span>© {year} Lakshay Kumar</span>
+    <a href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<style>
+  .ftr { border-top: 1px solid var(--line); padding-top: clamp(3rem, 6vw, 4.5rem); overflow: hidden; }
+  .ftr__grid { display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 2.5rem; }
+  .ftr ul { list-style: none; padding: 0; margin-top: 1rem; display: grid; gap: 0.5rem; justify-items: start; }
+  .ftr__grid .label + p { margin-top: 1rem; max-width: 20rem; }
+  .ftr__mark {
+    font: 900 clamp(4rem, 17.6vw, 26rem)/0.8 var(--display); letter-spacing: -0.04em; text-align: center; white-space: nowrap; padding-inline: var(--gutter);
+    color: transparent; -webkit-text-stroke: 1.5px var(--fg); margin-top: clamp(2.5rem, 6vw, 4rem); user-select: none;
+  }
+  .ftr__base { display: flex; justify-content: space-between; padding-block: 1.25rem 1.5rem; border-top: 1px solid var(--line); }
+  .ftr__base a:hover { color: var(--accent-ink); }
+  @media (max-width: 640px) { .ftr__grid { grid-template-columns: 1fr 1fr; } .ftr__grid > div:last-child { grid-column: 1 / -1; } }
+</style>

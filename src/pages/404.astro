@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import PostList from '../components/PostList.astro';
+import { getPosts } from '../lib/posts';
+
+const posts = (await getPosts()).slice(0, 3);
+---
+
+<Base title="Page not found | Lakshay Kumar" description="This page doesn't exist." noindex>
+  <section class="wrap nf">
+    <p class="label">Error 404</p>
+    <h1>Not<br />found.</h1>
+    <p class="lede">It may have moved when I rebuilt the site. Here is where most people go next.</p>
+    <p class="nf__links"><a href="/" class="btn">Home</a> <a href="/writing/" class="btn btn--ghost">Writing</a> <a href="/workshops/" class="btn btn--ghost">Workshops</a></p>
+  </section>
+  <section class="wrap list" aria-label="Recent writing"><PostList posts={posts} headingLevel="h2" /></section>
+</Base>
+
+<style>
+  .nf { padding-block: clamp(3rem, 8vw, 6rem) 3rem; display: grid; gap: 1.5rem; justify-items: start; }
+  .nf h1 { font-size: clamp(3.5rem, 19vw, 17rem); line-height: 0.84; letter-spacing: -0.06em; }
+  .nf__links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .list { padding-bottom: 2rem; }
+</style>

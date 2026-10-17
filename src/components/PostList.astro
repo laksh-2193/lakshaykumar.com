@@ -1,0 +1,29 @@
+---
+import { type Post, postUrl, readingTime } from '../lib/posts';
+
+interface Props {
+  posts: Post[];
+  headingLevel?: 'h2' | 'h3';
+}
+const { posts, headingLevel = 'h3' } = Astro.props;
+const H = headingLevel;
+const month = (d: Date) => d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+---
+
+<ul class="entries">
+  {posts.map((p) => (
+    <li data-series={p.data.series}>
+      <a href={postUrl(p)} class="entry">
+        <time class="entry__date" datetime={p.data.date.toISOString()}>{month(p.data.date)}</time>
+        <div>
+          <H class="entry__title">{p.data.title}</H>
+          <p class="entry__dek">{p.data.description}</p>
+        </div>
+        <div class="entry__meta">
+          <span>{p.data.series} · {readingTime(p)} min</span>
+          <strong>{p.data.result}</strong>
+        </div>
+      </a>
+    </li>
+  ))}
+</ul>
