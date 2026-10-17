@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import ConversationForm from '../components/ConversationForm.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Talk to Lakshay Kumar — conversations about building with AI"
+  description="Founders and engineers building with AI: tell me what you're working on. Early ideas, model choice, evals, agent design. No pitch, nothing to buy."
+  og="talk"
+>
+  <section class="wrap head">
+    <p class="label"><span class="dot dot--ok" aria-hidden="true"></span>Open to conversations</p>
+    <h1>Let's talk.</h1>
+    <p class="lede">I like talking shop with founders and engineers: early ideas you're stuck on, which model to use, how to evaluate prompts, agent architecture, and the messy middle of going from zero to one. No pitch, nothing to buy.</p>
+  </section>
+
+  <section class="wrap talk">
+    <ConversationForm />
+    <aside class="talk__side">
+      <div><p class="label">Good reasons to write</p><p>A specific question, a rough idea that needs a second opinion, one of my experiments, or a workshop for your organisation.</p></div>
+      <div><p class="label">What to include</p><p>What you're building, what stage it's at, and where you're stuck.</p></div>
+      <div><p class="label">Direct email</p><a href={`mailto:${site.email}`} class="link">{site.email}</a></div>
+      <div><p class="label">Response time</p><p>A couple of days, usually sooner.</p></div>
+    </aside>
+  </section>
+</Base>
+
+<style>
+  .head { padding-block: clamp(3rem, 8vw, 6rem) clamp(2.5rem, 5vw, 4rem); display: grid; gap: 1.5rem; justify-items: start; }
+  .head h1 { font-size: clamp(2.75rem, 12.6vw, 15rem); line-height: 0.84; letter-spacing: -0.06em; }
+  .head .lede { max-width: 42rem; }
+  .talk { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.7fr); gap: clamp(2.5rem, 7vw, 6rem); align-items: start; padding-top: 2rem; border-top: 1px solid var(--fg); }
+  @media (max-width: 900px) { .talk { grid-template-columns: 1fr; } }
+  .talk__side { display: grid; gap: 1.75rem; align-content: start; }
+  .talk__side > div { display: grid; gap: 0.5rem; justify-items: start; }
+  .talk__side p:not(.label) { color: var(--soft); }
+</style>

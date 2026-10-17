@@ -1,14 +1,17 @@
 User-agent: *
 Allow: /
+Disallow: /thanks/
 
-# AI crawlers — allow citation/indexing
+# AI crawlers welcome — content may be cited with attribution.
 User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
 Allow: /
 User-agent: ChatGPT-User
 Allow: /
 User-agent: ClaudeBot
 Allow: /
-User-agent: anthropic-ai
+User-agent: Claude-SearchBot
 Allow: /
 User-agent: PerplexityBot
 Allow: /
@@ -16,4 +19,3 @@ User-agent: Google-Extended
 Allow: /
 
 Sitemap: https://lakshaykumar.com/sitemap.xml
-Host: https://lakshaykumar.com

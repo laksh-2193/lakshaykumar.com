@@ -1,0 +1,62 @@
+---
+import QRCode from 'qrcode';
+import Base from '../../layouts/Base.astro';
+import { card } from '../../data/card';
+import { site } from '../../data/site';
+
+const qr = await QRCode.toString(`${site.url}/network/`, { type: 'svg', margin: 0, errorCorrectionLevel: 'M', color: { dark: '#0a0a0bff', light: '#00000000' } });
+---
+
+<Base title={`${card.name} — contact card`} description={card.about} noindex chrome={false}>
+  <div class="nc">
+    <article class="nc__card">
+      <header class="nc__head">
+        <div>
+          <p class="label"><span class="dot" aria-hidden="true"></span>Contact card</p>
+          <h1>{card.name}</h1>
+          <p class="nc__tag">{card.tagline}</p>
+        </div>
+        <div class="nc__qr" set:html={qr} role="img" aria-label="QR code for this page" />
+      </header>
+
+      <p class="nc__about">{card.about}</p>
+      <ul class="nc__hl">{card.highlights.map((h) => <li>{h}</li>)}</ul>
+
+      <a href="/network/lakshay-kumar.vcf" class="btn nc__save" download>Save contact <span aria-hidden="true">↓</span></a>
+
+      <ul class="nc__links">
+        {card.links.map((l) => {
+          const external = l.url.startsWith('http');
+          return (
+            <li>
+              <a href={l.url} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined}>
+                <span>{l.label}</span>
+                <span class="muted small">{l.note}</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </article>
+    <p class="mono muted"><a href="/" class="link">lakshaykumar.com</a></p>
+  </div>
+</Base>
+
+<style>
+  .nc { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; gap: 1.25rem; }
+  .nc__card { width: 30rem; max-width: 100%; background: var(--elev); border: 1px solid var(--line); border-radius: 24px; padding: clamp(1.5rem, 5vw, 2.25rem); }
+  .nc__head { display: flex; justify-content: space-between; gap: 1.25rem; align-items: start; }
+  .nc__head h1 { font-size: clamp(2.75rem, 11vw, 4rem); margin: 0.75rem 0 0.5rem; }
+  .nc__tag { color: var(--muted); }
+  .nc__qr { width: 5.25rem; flex: none; padding: 0.375rem; background: #fff; border: 1px solid var(--line); border-radius: 10px; }
+  .nc__about { margin-top: 1.5rem; color: var(--soft); }
+  .nc__hl { margin-top: 1rem; padding-left: 1.1rem; color: var(--soft); font-size: 0.9375rem; display: grid; gap: 0.25rem; }
+  .nc__hl li::marker { color: var(--accent); }
+  .nc__save { margin-top: 1.75rem; width: 100%; justify-content: center; }
+  .nc__links { list-style: none; padding: 0; margin-top: 1.5rem; border-top: 1px solid var(--fg); }
+  .nc__links li { border-bottom: 1px solid var(--line); }
+  .nc__links a { display: grid; grid-template-columns: 5.5rem 1fr auto; gap: 0.75rem; align-items: baseline; padding: 0.875rem 0; font-weight: 500; transition: color 0.2s; }
+  .nc__links a:hover { color: var(--accent-ink); }
+  .nc__links .muted { font-weight: 400; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+</style>

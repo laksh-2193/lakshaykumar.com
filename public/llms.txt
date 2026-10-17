@@ -1,0 +1,25 @@
+# Lakshay Kumar
+
+> Generative AI engineer in Bangalore, India. Builds AI products end to end (LLM integrations, agents, RAG, full-stack) and publishes experiments comparing how models such as Claude, GPT, Gemini and DeepSeek behave on the same task. Runs hands-on AI agent workshops. Open to conversations with founders building with AI; does not offer paid services.
+
+## Writing
+- [I gave four AI models $10,000 each and let them trade](https://lakshaykumar.com/writing/ai-trading-arena/): Claude Sonnet 4.6 +5.26%, DeepSeek v3.5 +4.98%, Gemma 4 0.00%, GPT-5.4 −0.23% over 20 simulated rounds with identical data and prompts.
+- [I put AI on trial — and the AIs convicted themselves](https://lakshaykumar.com/writing/ai-models-on-trial/): GPT-5.4-mini defended, Claude Haiku 3 prosecuted, Gemini 3.1 judged five propositions about AI.
+- [GPT-4o vs Claude 3.5 Sonnet: two minds, one board](https://lakshaykumar.com/writing/gpt-4o-vs-claude-head-to-head/): behavioural differences in a head-to-head game.
+- [Liri: building a memory companion inside Telegram](https://lakshaykumar.com/writing/liri-memory-companion/): a lightweight agentic AI for voice and text memory.
+- [I built a word embeddings model from scratch](https://lakshaykumar.com/writing/embeddings-from-scratch/): co-occurrence, context windows, Word2Vec-style training, PCA/t-SNE.
+- [Face recognition with just NumPy and PCA](https://lakshaykumar.com/writing/eigenfaces-face-recognition-numpy/): eigenfaces explained with code.
+
+## Pages
+- [About](https://lakshaykumar.com/about/): background, experience, toolkit, FAQ.
+- [Workshops](https://lakshaykumar.com/workshops/): six AI agent sessions — first agent, tool calling, multi-agent, memory/RAG, MCP, modular skills.
+- [Talk](https://lakshaykumar.com/talk/): contact form for conversations.
+
+## Projects
+- [DocIQ](https://www.dociq.space/): interactive, chat-ready PDFs.
+- [Hyd/Rent](https://hyd-rent.vercel.app/): unified rental platform for Hyderabad.
+
+## Contact
+- Email: connect@lakshaykumar.com
+- LinkedIn: https://www.linkedin.com/in/lakshaykumar-tech/
+- GitHub: https://github.com/laksh-2193

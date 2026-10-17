@@ -1,0 +1,159 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Arrow from '../../components/Arrow.astro';
+import ResultsChart from '../../components/ResultsChart.astro';
+import { site } from '../../data/site';
+import { modelNames } from '../../data/models';
+import { getPosts, postUrl, formatDate, readingTime, nextInSeries, related, type Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, all: posts } }));
+}
+
+const { post, all } = Astro.props as { post: Post; all: Post[] };
+const { Content } = await render(post);
+const d = post.data;
+const url = `${site.url}${postUrl(post)}`;
+const next = nextInSeries(post, all);
+const more = related(post, all, next ? [next.id] : [], 2);
+const askHref = `/talk/?topic=Experiment&ref=${encodeURIComponent(post.id)}`;
+const tested = d.models.map((m) => modelNames[m]).join(', ');
+
+const jsonLd = [
+  {
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    headline: d.title,
+    description: d.description,
+    abstract: d.tldr,
+    datePublished: d.date.toISOString(),
+    dateModified: (d.updated ?? d.date).toISOString(),
+    url,
+    mainEntityOfPage: url,
+    image: `${site.url}/og/${post.id}.png`,
+    author: { '@id': `${site.url}/#person` },
+    publisher: { '@id': `${site.url}/#person` },
+    keywords: d.tags.join(', '),
+    articleSection: d.series,
+    wordCount: (post.body ?? '').split(/\s+/).length,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Writing', item: `${site.url}/writing/` },
+      { '@type': 'ListItem', position: 3, name: d.title, item: url },
+    ],
+  },
+];
+---
+
+<Base
+  title={d.title.length <= 44 ? `${d.title} | Lakshay Kumar` : d.title}
+  description={d.description}
+  og={post.id}
+  type="article"
+  published={d.date}
+  modified={d.updated}
+  jsonLd={jsonLd}
+>
+  <div class="progress" aria-hidden="true"></div>
+
+  <header class="wrap art__head">
+    <p class="label"><a href="/writing/" class="link">Writing</a> <span>/</span> <b>{d.series}</b></p>
+    <h1>{d.title}</h1>
+    <p class="lede">{d.tldr}</p>
+    <dl class="meta">
+      <div><dt class="label">By</dt><dd><a href="/about/" class="link">Lakshay Kumar</a></dd></div>
+      <div><dt class="label">Published</dt><dd><time datetime={d.date.toISOString()}>{formatDate(d.date)}</time></dd></div>
+      <div><dt class="label">Reading time</dt><dd>{readingTime(post)} min</dd></div>
+      {tested && <div><dt class="label">Models tested</dt><dd>{tested}</dd></div>}
+      <div><dt class="label">Result</dt><dd class="meta__res">{d.result}</dd></div>
+    </dl>
+  </header>
+
+  {d.figure === 'arena' && (
+    <section class="inv art__fig">
+      <div class="wrap"><div class="art__figin"><ResultsChart /></div></div>
+    </section>
+  )}
+
+  <article class="wrap art__body">
+    <div class="prose"><Content /></div>
+
+    <aside class="ask" aria-label="Follow up">
+      <p class="label"><b>→</b> Follow-up</p>
+      <p class="ask__q display">{d.ask}</p>
+      <p class="muted">Tell me what you're working on and I'll send it over or walk you through it.</p>
+      <a class="btn" href={askHref}>Ask me about this <Arrow /></a>
+    </aside>
+
+    {d.linkedin && (
+      <p class="small muted origin">First shared on <a href={d.linkedin} target="_blank" rel="noopener" class="link">LinkedIn</a>, where the discussion continues.</p>
+    )}
+  </article>
+
+  <section class="wrap after" aria-label="Keep reading">
+    <p class="label"><b>→</b> Keep reading</p>
+    <div class="after__grid">
+      {next && (
+        <a href={postUrl(next)} class="after__next">
+          <p class="label">Next in {d.series}</p>
+          <p class="after__title display">{next.data.title}</p>
+          <p class="muted">{next.data.tldr}</p>
+          <span class="btn btn--ghost btn--sm">Read it · {readingTime(next)} min <Arrow /></span>
+        </a>
+      )}
+      {more.map((p) => (
+        <a href={postUrl(p)} class="after__more">
+          <p class="label">{p.data.series}</p>
+          <p class="after__title after__title--sm display">{p.data.title}</p>
+          <p class="mono muted">{p.data.result}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); z-index: 60; }
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .progress { animation: grow linear both; animation-timeline: scroll(root); }
+      @keyframes grow { to { transform: scaleX(1); } }
+    }
+  }
+  @supports not (animation-timeline: scroll()) { .progress { display: none; } }
+
+  .art__head { padding-block: clamp(2.5rem, 6vw, 5rem) clamp(2.5rem, 5vw, 4rem); display: grid; gap: clamp(1.25rem, 2.5vw, 2rem); }
+  .art__head .label span { color: var(--line); }
+  .art__head h1 { font-size: clamp(2.75rem, 8.2vw, 7.5rem); max-width: 15ch; letter-spacing: -0.05em; line-height: 0.92; }
+  .art__head .lede { max-width: 44rem; }
+  .meta { display: flex; flex-wrap: wrap; gap: 1.25rem 3rem; padding-top: 1.5rem; margin-top: 0.5rem; border-top: 1px solid var(--fg); }
+  .meta dd { margin-top: 0.25rem; font-size: 1rem; }
+  .meta__res { color: var(--accent-ink); font-weight: 600; }
+
+  .art__fig { padding-block: clamp(3rem, 6vw, 5rem); }
+  .art__figin { max-width: 52rem; margin-inline: auto; }
+
+  .art__body { max-width: calc(46rem + 2 * var(--gutter)); padding-top: clamp(3rem, 6vw, 5rem); }
+  .ask { margin-top: 4.5rem; padding: clamp(1.5rem, 3vw, 2.25rem); background: var(--fg); color: var(--bg); border-radius: 20px; display: grid; gap: 1rem; justify-items: start; }
+  .ask .label { color: #9b9ba1; }
+  .ask__q { font-size: clamp(2rem, 4.4vw, 3.25rem); letter-spacing: -0.04em; line-height: 0.98; }
+  .ask .muted { color: #b4b3ae; }
+  .ask .btn { background: var(--bg); color: var(--fg); border-color: var(--bg); margin-top: 0.5rem; }
+  .ask .btn:hover { background: var(--accent); border-color: var(--accent); color: #0a0a0b; }
+  .origin { margin-top: 1.75rem; }
+
+  .after { padding-block: clamp(4rem, 8vw, 6rem) 0; display: grid; gap: 1.5rem; }
+  .after__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 1rem; }
+  .after__grid > a { display: grid; gap: 0.875rem; align-content: start; justify-items: start; background: var(--elev); border: 1px solid var(--line); border-radius: 20px; padding: 1.5rem; transition: transform 0.4s var(--ease), border-color 0.3s; }
+  .after__grid > a:hover { transform: translateY(-4px); border-color: var(--fg); }
+  .after__title { font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.04em; transition: color 0.2s; }
+  .after__title--sm { font-size: 1.5rem; }
+  .after__grid > a:hover .after__title { color: var(--accent-ink); }
+  @media (max-width: 860px) { .after__grid { grid-template-columns: 1fr; } }
+</style>

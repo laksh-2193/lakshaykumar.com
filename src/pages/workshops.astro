@@ -1,0 +1,108 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import ConversationForm from '../components/ConversationForm.astro';
+import { site } from '../data/site';
+import { sessions } from '../data/workshops';
+
+const totalHours = sessions.reduce((n, s) => n + s.hours, 0);
+const lvl = (l: string) => (l === 'Beginner' ? 1 : l === 'Intermediate' ? 2 : 3);
+---
+
+<Base
+  title="AI Agent Workshops — hands-on sessions by Lakshay Kumar"
+  description="Six independent, hands-on AI agent workshops: build a first agent, tool calling and automation, multi-agent systems, memory and RAG, MCP tool servers, and modular skills. For colleges, communities and teams."
+  og="workshops"
+  jsonLd={[
+    {
+      '@type': 'Course',
+      '@id': `${site.url}/workshops/#course`,
+      name: 'AI Agent Workshop Sessions',
+      description: 'Six independent hands-on sessions taking participants from a first AI agent to production-shaped multi-agent systems.',
+      provider: { '@id': `${site.url}/#person` },
+      instructor: { '@id': `${site.url}/#person` },
+      inLanguage: 'en',
+      hasPart: sessions.map((s) => ({
+        '@type': 'Course', name: s.title, description: s.build, educationalLevel: s.level, timeRequired: `PT${s.hours}H`, provider: { '@id': `${site.url}/#person` },
+      })),
+    },
+  ]}
+>
+  <section class="wrap head">
+    <p class="label"><b>06</b> — Sessions · {totalHours} hours in total</p>
+    <h1>Workshops.</h1>
+    <p class="lede">Hands-on AI agent sessions, from a first prompt to multi-agent systems. Take any of them, in any order. Every session ends with participants running something they built and understand line by line.</p>
+    <p class="head__cta"><a href="#invite" class="btn">Request a session <Arrow /></a></p>
+  </section>
+
+  <section class="wrap" aria-label="Curriculum">
+    <ol class="mods">
+      {sessions.map((s) => (
+        <li class="mod" id={s.slug}>
+          <span class="mod__n display outline" aria-hidden="true">{s.n}</span>
+          <div class="mod__body">
+            <div class="mod__top">
+              <span class="mono muted num">{s.hours} hours</span>
+              <span class="mod__lvl mono muted"><span class="mod__bars" aria-hidden="true">{[1, 2, 3].map((n) => <i class:list={{ on: n <= lvl(s.level) }} />)}</span>{s.level}</span>
+            </div>
+            <h2 class="mod__title">{s.title}</h2>
+            <div class="mod__cols">
+              <div>
+                <p class="label">You'll learn</p>
+                <ul>{s.learn.map((l) => <li>{l}</li>)}</ul>
+              </div>
+              <div>
+                <p class="label">You'll build</p>
+                <p>{s.build}</p>
+                <p class="mod__out">{s.outcome}</p>
+              </div>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="wrap sect" id="invite" aria-labelledby="inv">
+    <div class="invite">
+      <div class="invite__intro">
+        <p class="label"><b>→</b> Request a session</p>
+        <h2 id="inv">Bring it to your people.</h2>
+        <p class="lede">A college, a community or a team. Tell me who's attending and which sessions interest you, and I'll come back with a format and some dates.</p>
+      </div>
+      <ConversationForm variant="workshop" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head { padding-block: clamp(3rem, 8vw, 6rem) clamp(3rem, 6vw, 4.5rem); display: grid; gap: 1.5rem; justify-items: start; }
+  .head h1 { font-size: clamp(2.5rem, 13.4vw, 15rem); line-height: 0.84; letter-spacing: -0.06em; }
+  .head .lede { max-width: 42rem; }
+
+  .mods { list-style: none; padding: 0; border-top: 1px solid var(--fg); }
+  .mod { display: grid; grid-template-columns: clamp(5rem, 14vw, 12rem) minmax(0, 1fr); gap: 1rem 2.5rem; padding: clamp(2rem, 4vw, 3rem) 0 clamp(2.25rem, 4vw, 3.5rem); border-bottom: 1px solid var(--line); scroll-margin-top: 5.5rem; }
+  .mod__n { font-size: clamp(4.5rem, 12vw, 10rem); font-weight: 900; line-height: 0.8; letter-spacing: -0.06em; transition: -webkit-text-stroke-color 0.3s; }
+  .mod:hover .mod__n, .mod:target .mod__n { -webkit-text-stroke-color: var(--accent); }
+  .mod__top { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .mod__lvl { display: inline-flex; align-items: center; gap: 0.625rem; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.6875rem; }
+  .mod__bars { display: inline-flex; gap: 3px; }
+  .mod__bars i { width: 0.875rem; height: 0.375rem; background: var(--line); border-radius: 2px; }
+  .mod__bars i.on { background: var(--accent); }
+  .mod__title { font-size: clamp(2rem, 4.6vw, 3.75rem); max-width: 20ch; }
+  .mod__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.75rem; }
+  .mod__cols ul { list-style: none; padding: 0; margin-top: 0.75rem; display: grid; gap: 0.5rem; color: var(--soft); }
+  .mod__cols li { padding-left: 1.25rem; position: relative; }
+  .mod__cols li::before { content: ''; position: absolute; left: 0; top: 0.72em; width: 0.5rem; height: 2px; background: var(--accent); }
+  .mod__cols p:not(.label) { margin-top: 0.75rem; color: var(--soft); }
+  .mod__out { font-weight: 600; color: var(--fg) !important; margin-top: 1rem !important; }
+  @media (max-width: 760px) {
+    .mod { grid-template-columns: 1fr; gap: 0.5rem; }
+    .mod__n { font-size: 4.5rem; }
+    .mod__cols { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+
+  .invite { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(2.5rem, 7vw, 6rem); align-items: start; }
+  .invite__intro { display: grid; gap: 1.5rem; position: sticky; top: 6rem; }
+  @media (max-width: 900px) { .invite { grid-template-columns: 1fr; } .invite__intro { position: static; } }
+</style>

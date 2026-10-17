@@ -1,0 +1,235 @@
+---
+import { site, topics, stages } from '../data/site';
+import { sessions } from '../data/workshops';
+import Arrow from './Arrow.astro';
+
+interface Props {
+  variant?: 'conversation' | 'workshop';
+  topic?: string;
+}
+
+const { variant = 'conversation', topic } = Astro.props;
+const isWorkshop = variant === 'workshop';
+const subject = isWorkshop ? 'Workshop invite — lakshaykumar.com' : 'New conversation — lakshaykumar.com';
+// Web3Forms' shared hCaptcha site key (free tier). Verification happens on their side.
+const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
+---
+
+<form
+  class="cf"
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  data-conversation-form
+  novalidate
+>
+  <div class="cf__body">
+    <input type="hidden" name="access_key" value={site.formKey} />
+    <input type="hidden" name="subject" value={subject} />
+    <input type="hidden" name="from_name" value="lakshaykumar.com" />
+    <input type="hidden" name="redirect" value={`${site.url}/thanks/`} />
+    <input type="hidden" name="source_page" value="" data-source />
+    <input type="hidden" name="referred_by" value="" data-ref />
+    <!-- Honeypot: humans never see or fill this. -->
+    <div class="cf__hp" aria-hidden="true">
+      <label>Leave this empty <input type="text" name="botcheck" tabindex="-1" autocomplete="off" /></label>
+    </div>
+
+    <div class="cf__row">
+      <div class="field">
+        <label for={`${variant}-name`}>01 · Your name</label>
+        <input class="input" id={`${variant}-name`} name="name" autocomplete="name" required />
+      </div>
+      <div class="field">
+        <label for={`${variant}-email`}>02 · Email</label>
+        <input class="input" id={`${variant}-email`} name="email" type="email" autocomplete="email" required />
+      </div>
+    </div>
+
+    {isWorkshop ? (
+      <>
+        <div class="cf__row">
+          <div class="field">
+            <label for="workshop-org">Organisation</label>
+            <input class="input" id="workshop-org" name="organisation" placeholder="College, community or team" required />
+          </div>
+          <div class="field">
+            <label for="workshop-size">Audience size <span class="hint">(roughly)</span></label>
+            <input class="input" id="workshop-size" name="audience_size" inputmode="numeric" placeholder="40" />
+          </div>
+        </div>
+        <fieldset class="field">
+          <legend>Sessions of interest <span class="hint">— pick any</span></legend>
+          <div class="chips">
+            {sessions.map((s) => (
+              <label class="chip"><input type="checkbox" name="sessions" value={`${s.n} ${s.title}`} /><span>{s.n} · {s.title}</span></label>
+            ))}
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="workshop-message">Anything else <span class="hint">— dates, format, who's attending</span></label>
+          <textarea class="input" id="workshop-message" name="message" rows="4" />
+        </div>
+        <input type="hidden" name="topic" value="Workshop" />
+      </>
+    ) : (
+      <>
+        <div class="field">
+          <label for="conversation-message">03 · What are you building, and where are you stuck?</label>
+          <textarea class="input" id="conversation-message" name="message" rows="5" required placeholder="A sentence or two is plenty. Specific questions get the most useful replies." />
+        </div>
+        <fieldset class="field">
+          <legend>04 · Stage <span class="hint">(optional)</span></legend>
+          <div class="chips">
+            {stages.map((s) => (
+              <label class="chip"><input type="radio" name="stage" value={s} /><span>{s}</span></label>
+            ))}
+          </div>
+        </fieldset>
+        <fieldset class="field">
+          <legend>05 · Topic</legend>
+          <div class="chips">
+            {topics.map((t) => (
+              <label class="chip"><input type="radio" name="topic" value={t.value} checked={t.value === topic} /><span>{t.label}</span></label>
+            ))}
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="conversation-url">06 · Link <span class="hint">(optional: product, repo, deck)</span></label>
+          <input class="input" id="conversation-url" name="link" type="url" inputmode="url" placeholder="https://" />
+        </div>
+      </>
+    )}
+
+    <div class="field">
+      <span class="cf__clabel">Quick check</span>
+      <div class="h-captcha" data-sitekey={HCAPTCHA_SITEKEY} data-captcha></div>
+      <noscript><p class="muted">Please enable JavaScript to complete the quick check, or email {site.email}.</p></noscript>
+    </div>
+
+    <div class="cf__foot">
+      <button type="submit" class="btn btn--primary">
+        <span data-label>{isWorkshop ? 'Send request' : 'Send message'}</span>
+        <Arrow />
+      </button>
+      <p class="cf__note">I read everything and usually reply within a couple of days.</p>
+    </div>
+    <p class="cf__status" role="status" aria-live="polite" data-status></p>
+  </div>
+</form>
+
+<style>
+  .cf__body { display: grid; gap: 2rem; }
+  .cf__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 560px) { .cf__row { grid-template-columns: 1fr; } }
+  .cf fieldset { border: 0; padding: 0; min-width: 0; }
+  .cf legend { margin-bottom: 0.75rem; padding: 0; }
+  .cf__hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .cf__clabel { font: 400 0.6875rem/1.4 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .h-captcha { min-height: 78px; }
+  .cf__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; }
+  .cf__note { color: var(--muted); font-size: 0.875rem; max-width: 22rem; }
+  .cf__status { min-height: 1.5em; font-size: 0.9375rem; }
+  .cf__status[data-state='error'] { color: var(--accent-ink); }
+  .cf__status[data-state='ok'] { color: var(--ok); }
+</style>
+
+<script>
+  declare global {
+    interface Window { hcaptcha?: { reset: (id?: string) => void } }
+  }
+
+  const MIN_FILL_MS = 3000;
+  const loadedAt = Date.now();
+  const forms = document.querySelectorAll<HTMLFormElement>('[data-conversation-form]');
+  const params = new URLSearchParams(location.search);
+
+  // Load hCaptcha only when someone actually engages with a form.
+  let captchaRequested = false;
+  function loadCaptcha() {
+    if (captchaRequested) return;
+    captchaRequested = true;
+    const theme = 'light';
+    document.querySelectorAll('.h-captcha').forEach((el) => el.setAttribute('data-theme', theme));
+    const s = document.createElement('script');
+    s.src = 'https://js.hcaptcha.com/1/api.js';
+    s.async = true;
+    s.defer = true;
+    document.head.appendChild(s);
+  }
+  const nearForm = new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.isIntersecting)) { loadCaptcha(); nearForm.disconnect(); }
+  }, { rootMargin: '400px 0px' });
+
+  forms.forEach((form) => {
+    nearForm.observe(form);
+    form.addEventListener('focusin', loadCaptcha, { once: true });
+
+    const source = form.querySelector<HTMLInputElement>('[data-source]');
+    const ref = form.querySelector<HTMLInputElement>('[data-ref]');
+    if (source) source.value = location.pathname;
+    if (ref) ref.value = params.get('ref') ?? document.referrer;
+
+    const wanted = params.get('topic');
+    if (wanted) {
+      const radio = form.querySelector<HTMLInputElement>(`input[name="topic"][value="${CSS.escape(wanted)}"]`);
+      if (radio) radio.checked = true;
+    }
+
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const label = form.querySelector<HTMLElement>('[data-label]')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const idle = label.textContent;
+
+    const say = (msg: string, state: 'error' | 'ok' | '' = '') => {
+      status.textContent = msg;
+      if (state) status.dataset.state = state; else status.removeAttribute('data-state');
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        const bad = form.querySelector<HTMLInputElement>(':invalid');
+        bad?.focus();
+        say(bad?.type === 'email' ? 'Please enter a valid email address.' : 'Please fill in the required fields.', 'error');
+        return;
+      }
+
+      const data = new FormData(form);
+      if (data.get('botcheck')) return; // honeypot tripped — drop silently
+      if (Date.now() - loadedAt < MIN_FILL_MS) {
+        say('That was quick. Give it a second and try again.', 'error');
+        return;
+      }
+      const token = data.get('h-captcha-response');
+      if (!token) {
+        loadCaptcha();
+        say('Please complete the quick check first.', 'error');
+        return;
+      }
+
+      const topic = (data.get('topic') as string) || 'General';
+      data.set('subject', `${topic} — ${data.get('name')} via lakshaykumar.com`);
+      const picked = data.getAll('sessions');
+      if (picked.length) { data.delete('sessions'); data.set('sessions', picked.join(', ')); }
+
+      button.disabled = true;
+      label.textContent = 'Sending…';
+      say('');
+      try {
+        const res = await fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: data });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || !json.success) throw new Error(json.message || `Request failed (${res.status}).`);
+        say('Sent. Thank you.', 'ok');
+        location.href = `/thanks/?t=${encodeURIComponent(topic)}`;
+      } catch (err) {
+        say(`Couldn't send: ${(err as Error).message} You can also email connect@lakshaykumar.com.`, 'error');
+        window.hcaptcha?.reset();
+        button.disabled = false;
+        label.textContent = 'Retry';
+      } finally {
+        if (label.textContent === 'Sending…') label.textContent = idle;
+      }
+    });
+  });
+</script>
