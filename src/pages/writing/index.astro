@@ -25,8 +25,8 @@ const series = [...new Set(posts.map((p) => p.data.series).filter(Boolean))] as 
 >
   <section class="wrap head">
     <p class="label"><b>{String(posts.length).padStart(2, '0')}</b> — Pieces so far</p>
-    <h1>Writing.</h1>
-    <p class="lede">Experiments, rebuilds and build logs. I learn by building small, honest things and writing up what happened, including the parts that didn't work.</p>
+    <h1><span class="mask"><span>Writing<span class="pop">.</span></span></span></h1>
+    <p class="lede">Experiments, rebuilds and build logs. I learn by building small, honest things and writing up what happened, including the parts that didn’t work.</p>
     <p class="mono muted"><a href="/rss.xml" class="link">RSS</a> &nbsp;/&nbsp; <a href={site.linkedin} target="_blank" rel="noopener" class="link">Follow on LinkedIn ↗</a></p>
   </section>
 
@@ -35,14 +35,14 @@ const series = [...new Set(posts.map((p) => p.data.series).filter(Boolean))] as 
       <button type="button" class="pill is-on" data-filter="all" aria-pressed="true">All</button>
       {series.map((s) => <button type="button" class="pill" data-filter={s} aria-pressed="false">{s}</button>)}
     </div>
-    <PostList posts={posts} headingLevel="h2" />
+    <PostList posts={posts} headingLevel="h2" dek />
   </section>
 </Base>
 
 <script>
   const bar = document.querySelector<HTMLElement>('[data-filters]');
   if (bar) {
-    const rows = document.querySelectorAll<HTMLElement>('.entries li');
+    const rows = document.querySelectorAll<HTMLElement>('.rows li');
     bar.addEventListener('click', (e) => {
       const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-filter]');
       if (!btn) return;
@@ -59,11 +59,11 @@ const series = [...new Set(posts.map((p) => p.data.series).filter(Boolean))] as 
 
 <style>
   .head { padding-block: clamp(3rem, 8vw, 6rem) clamp(2.5rem, 5vw, 4rem); display: grid; gap: 1.5rem; justify-items: start; }
-  .head h1 { font-size: clamp(3.25rem, 17vw, 17rem); line-height: 0.84; letter-spacing: -0.06em; }
+  .head h1 { font-size: clamp(3.5rem, 17vw, 17rem); line-height: 0.84; letter-spacing: -0.06em; font-weight: 900; font-stretch: 100%; }
   .head .lede { max-width: 40rem; }
   .list { padding-bottom: clamp(4rem, 9vw, 7rem); }
-  .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-  .pill { font: 500 0.875rem/1 var(--body); padding: 0.75rem 1.125rem; border-radius: 999px; border: 1px solid var(--line); background: var(--elev); cursor: pointer; transition: all 0.2s; }
+  .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.75rem; }
+  .pill { font: 500 0.875rem/1 var(--body); padding: 0.75rem 1.125rem; border-radius: 999px; border: 1px solid var(--line); cursor: pointer; transition: all 0.25s var(--ease); }
   .pill:hover { border-color: var(--fg); }
   .pill.is-on { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 </style>

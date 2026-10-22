@@ -8,7 +8,7 @@ tags: ["Embeddings", "NLP", "Word2Vec", "Python", "Machine learning"]
 models: []
 result: "Word2Vec-style, zero libraries"
 linkedin: "https://www.linkedin.com/feed/update/urn:li:ugcPost:7319606035147542528/"
-ask: "Want my notes or the code? I'm happy to share."
+ask: "Want my notes or the code? I’m happy to share."
 ---
 
 Most of us plug in `SentenceTransformer` or `OpenAIEmbeddings` and move on. I wanted to understand what happens under the hood — so I built one.
@@ -27,7 +27,7 @@ Most of us plug in `SentenceTransformer` or `OpenAIEmbeddings` and move on. I wa
 
 **2. Slide a context window.** For each word, look at the words within *k* positions on either side. Those neighbours are its context. Count how often each pair appears together and you have a co-occurrence matrix.
 
-**3. Learn vectors.** Give every word a small random vector. Then nudge vectors with gradient descent so that words that appear in each other's context end up pointing in similar directions, and random pairs don't. That's the core idea behind Word2Vec's skip-gram objective.
+**3. Learn vectors.** Give every word a small random vector. Then nudge vectors with gradient descent so that words that appear in each other’s context end up pointing in similar directions, and random pairs don’t. That’s the core idea behind Word2Vec’s skip-gram objective.
 
 **4. Inspect the space.** Project the learned vectors down to two dimensions with PCA (linear) and t-SNE (non-linear) and see whether related words cluster.
 
@@ -51,8 +51,8 @@ for center, context, label in training_pairs:   # label: 1 = real pair, 0 = nega
 
 ## What I learned
 
-- **Dimensionality reduction isn't just a plotting tool — it's a sanity check.** If the 2D projection is a shapeless cloud, something upstream is wrong.
+- **Dimensionality reduction isn’t just a plotting tool — it’s a sanity check.** If the 2D projection is a shapeless cloud, something upstream is wrong.
 - **Context windows actually shape meaning.** Small windows pull together words that are *interchangeable* (syntax). Larger windows pull together words that are *about the same thing* (topic).
 - **"Close" vectors have a precise meaning.** Two words are close when they show up in similar contexts — not because the model knows what they mean.
 
-Building it made me appreciate how elegant these models are, and gave me a real feel for how language gets encoded as math. If you're getting into NLP, I'd recommend doing this once before you go back to the APIs.
+Building it made me appreciate how elegant these models are, and gave me a real feel for how language gets encoded as math. If you’re getting into NLP, I’d recommend doing this once before you go back to the APIs.

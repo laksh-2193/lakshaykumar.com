@@ -1,7 +1,7 @@
 ---
 title: "Liri: building a memory companion inside Telegram"
-description: "Liri is a lightweight agentic AI that lives in Telegram, listens to voice notes and text, and brings back the small things you'd otherwise forget."
-tldr: "I kept saying 'I'll remember that later' and never did. So I built Liri — a Telegram companion that understands intent, remembers voice and text, and surfaces things when you need them. Built for myself first; now in private beta."
+description: "Liri is a lightweight agentic AI that lives in Telegram, listens to voice notes and text, and brings back the small things you’d otherwise forget."
+tldr: "I kept saying 'I’ll remember that later' and never did. So I built Liri — a Telegram companion that understands intent, remembers voice and text, and surfaces things when you need them. Built for myself first; now in private beta."
 date: 2025-10-09
 series: "Build log"
 tags: ["Agentic AI", "Personal assistant", "Telegram bot", "Side project", "Memory"]
@@ -11,7 +11,7 @@ linkedin: "https://www.linkedin.com/feed/update/urn:li:ugcPost:73821631305602990
 ask: "Want to try Liri? Ask for a beta link."
 ---
 
-There's a thing I used to say all the time: *"I'll remember that later."* I rarely did.
+There’s a thing I used to say all the time: *"I’ll remember that later."* I rarely did.
 
 Little ideas on walks. Things people said in passing. Half-written to-dos scattered across five apps. All gone by the next morning.
 
@@ -21,15 +21,15 @@ So I built **Liri**.
 
 Liri lives inside Telegram, but it feels more like a small memory companion than a bot. You talk to it — by voice note or text — and it listens and remembers.
 
-- Thoughts and ideas you don't want to lose
+- Thoughts and ideas you don’t want to lose
 - Reminders, without opening a calendar
-- Small things, like *"where's my pendrive?"*
+- Small things, like *"where’s my pendrive?"*
 
 Liri keeps track quietly and brings things back up when you need them.
 
 ## How it works
 
-Under the hood it's what I call a **lightweight agentic AI**:
+Under the hood it’s what I call a **lightweight agentic AI**:
 
 - **Intent first.** Every message is classified — is this something to store, something to remind about, or a question about the past?
 - **It acts on its own.** Once the intent is clear, Liri does the thing: saves the memory, schedules the nudge, or retrieves the answer.
@@ -41,4 +41,4 @@ The best interface for capture is the one you already have open. Building inside
 
 ## Status
 
-I started it to manage the chaos in my own head. It's now in private beta, and I'd genuinely love feedback from people who forget things as often as I do.
+I started it to manage the chaos in my own head. It’s now in private beta, and I’d genuinely love feedback from people who forget things as often as I do.

@@ -10,12 +10,12 @@ const posts = (await getPosts()).slice(0, 3);
 <Base title="Message sent | Lakshay Kumar" description="Thanks for reaching out." noindex og="talk">
   <section class="wrap thanks">
     <p class="label"><span class="dot dot--ok" aria-hidden="true"></span>Message sent</p>
-    <h1>Thank you.</h1>
-    <p class="lede" data-workshop hidden>I'll come back within a couple of days with a format, some dates, and which sessions would suit your group best.</p>
-    <p class="lede" data-default>I'll reply within a couple of days. While you wait, here is what I've been working on lately.</p>
+    <h1><span class="mask"><span>Thank you<span class="pop">.</span></span></span></h1>
+    <p class="lede" data-workshop hidden>I’ll come back within a couple of days with a format, some dates, and which sessions would suit your group best.</p>
+    <p class="lede" data-default>I’ll reply within a couple of days. While you wait, here is what I’ve been working on lately.</p>
   </section>
   <section class="wrap list" aria-label="Recent writing">
-    <PostList posts={posts} headingLevel="h2" />
+    <PostList posts={posts} headingLevel="h2" chip={false} />
     <p class="more"><a href="/writing/" class="btn btn--ghost">All writing <Arrow /></a></p>
   </section>
 </Base>
@@ -29,7 +29,7 @@ const posts = (await getPosts()).slice(0, 3);
 
 <style>
   .thanks { padding-block: clamp(3rem, 8vw, 6rem) 3rem; display: grid; gap: 1.5rem; justify-items: start; }
-  .thanks h1 { font-size: clamp(2.75rem, 13vw, 13rem); line-height: 0.84; letter-spacing: -0.06em; }
+  .thanks h1 { font-size: clamp(2.75rem, 13vw, 13rem); line-height: 0.84; letter-spacing: -0.06em; font-weight: 900; font-stretch: 100%; }
   .thanks .lede { max-width: 36rem; }
   .list { padding-bottom: 2rem; }
   .more { padding-top: 2rem; }

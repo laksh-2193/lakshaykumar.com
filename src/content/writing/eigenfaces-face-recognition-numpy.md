@@ -1,7 +1,7 @@
 ---
 title: "Face recognition with just NumPy and PCA (eigenfaces)"
 description: "A face recognition system built with only NumPy, PCA and a few lines of Python — no TensorFlow, no PyTorch. Fast, explainable, and the best way to understand how machines recognise faces."
-tldr: "You don't need deep learning to understand face recognition. Using eigenfaces — PCA over flattened face images — and nearest-neighbour matching, I built a recogniser in plain NumPy that works, runs fast, and can be explained step by step."
+tldr: "You don’t need deep learning to understand face recognition. Using eigenfaces — PCA over flattened face images — and nearest-neighbour matching, I built a recogniser in plain NumPy that works, runs fast, and can be explained step by step."
 date: 2025-04-12
 series: "From scratch"
 tags: ["Computer vision", "PCA", "Eigenfaces", "NumPy", "Python", "Face recognition"]
@@ -18,14 +18,14 @@ One weekend I built a basic face recognition system using only **NumPy**, **PCA*
 The result:
 
 - **It works.**
-- **It's fast.**
-- **It's explainable** — you can see the *how* and the *why* at every step.
+- **It’s fast.**
+- **It’s explainable** — you can see the *how* and the *why* at every step.
 
 ## How eigenfaces work
 
 **1. Flatten every face.** A 64×64 grayscale image becomes a vector of 4,096 numbers. Stack your training faces into a matrix.
 
-**2. Subtract the mean face.** Average all the images to get the "mean face", then subtract it from each image so you're modelling only the differences.
+**2. Subtract the mean face.** Average all the images to get the "mean face", then subtract it from each image so you’re modelling only the differences.
 
 **3. Find the principal components.** PCA finds the directions in which faces vary the most. Reshape each direction back into an image and you get a ghostly face — an **eigenface**. A few dozen of them capture most of the variation.
 
@@ -53,8 +53,8 @@ def recognise(img):
 
 Because you can **build it from scratch, visualise every step, and explain it to anyone** — even without a CS degree. Seeing eigenfaces makes the idea behind every modern embedding click: compress something high-dimensional into a few numbers that keep what matters, then compare by distance.
 
-It's the same intuition behind the [embeddings model I built from scratch](/writing/embeddings-from-scratch/) a week later.
+It’s the same intuition behind the [embeddings model I built from scratch](/writing/embeddings-from-scratch/) a week later.
 
 ## Limits
 
-Eigenfaces are sensitive to lighting, pose and alignment, and they won't match modern deep models on messy real-world photos. As a learning tool, though, nothing beats them.
+Eigenfaces are sensitive to lighting, pose and alignment, and they won’t match modern deep models on messy real-world photos. As a learning tool, though, nothing beats them.

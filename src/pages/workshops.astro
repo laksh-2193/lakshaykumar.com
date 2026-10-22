@@ -29,10 +29,10 @@ const lvl = (l: string) => (l === 'Beginner' ? 1 : l === 'Intermediate' ? 2 : 3)
   ]}
 >
   <section class="wrap head">
-    <p class="label"><b>06</b> — Sessions · {totalHours} hours in total</p>
-    <h1>Workshops.</h1>
+    <p class="label"><b>{String(sessions.length).padStart(2, '0')}</b> — Sessions · {totalHours} hours in total</p>
+    <h1><span class="mask"><span>Workshops<span class="pop">.</span></span></span></h1>
     <p class="lede">Hands-on AI agent sessions, from a first prompt to multi-agent systems. Take any of them, in any order. Every session ends with participants running something they built and understand line by line.</p>
-    <p class="head__cta"><a href="#invite" class="btn">Request a session <Arrow /></a></p>
+    <p><a href="#invite" class="btn">Request a session <Arrow /></a></p>
   </section>
 
   <section class="wrap" aria-label="Curriculum">
@@ -48,11 +48,11 @@ const lvl = (l: string) => (l === 'Beginner' ? 1 : l === 'Intermediate' ? 2 : 3)
             <h2 class="mod__title">{s.title}</h2>
             <div class="mod__cols">
               <div>
-                <p class="label">You'll learn</p>
+                <p class="label">You’ll learn</p>
                 <ul>{s.learn.map((l) => <li>{l}</li>)}</ul>
               </div>
               <div>
-                <p class="label">You'll build</p>
+                <p class="label">You’ll build</p>
                 <p>{s.build}</p>
                 <p class="mod__out">{s.outcome}</p>
               </div>
@@ -67,8 +67,8 @@ const lvl = (l: string) => (l === 'Beginner' ? 1 : l === 'Intermediate' ? 2 : 3)
     <div class="invite">
       <div class="invite__intro">
         <p class="label"><b>→</b> Request a session</p>
-        <h2 id="inv">Bring it to your people.</h2>
-        <p class="lede">A college, a community or a team. Tell me who's attending and which sessions interest you, and I'll come back with a format and some dates.</p>
+        <h2 id="inv">Bring it to your people<span class="pop">.</span></h2>
+        <p class="lede">A college, a community or a team. Tell me who’s attending and which sessions interest you, and I’ll come back with a format and some dates.</p>
       </div>
       <ConversationForm variant="workshop" />
     </div>
@@ -77,17 +77,17 @@ const lvl = (l: string) => (l === 'Beginner' ? 1 : l === 'Intermediate' ? 2 : 3)
 
 <style>
   .head { padding-block: clamp(3rem, 8vw, 6rem) clamp(3rem, 6vw, 4.5rem); display: grid; gap: 1.5rem; justify-items: start; }
-  .head h1 { font-size: clamp(2.5rem, 13.4vw, 15rem); line-height: 0.84; letter-spacing: -0.06em; }
+  .head h1 { font-size: clamp(2.75rem, 13.4vw, 15rem); line-height: 0.84; letter-spacing: -0.06em; font-weight: 900; font-stretch: 100%; }
   .head .lede { max-width: 42rem; }
 
   .mods { list-style: none; padding: 0; border-top: 1px solid var(--fg); }
-  .mod { display: grid; grid-template-columns: clamp(5rem, 14vw, 12rem) minmax(0, 1fr); gap: 1rem 2.5rem; padding: clamp(2rem, 4vw, 3rem) 0 clamp(2.25rem, 4vw, 3.5rem); border-bottom: 1px solid var(--line); scroll-margin-top: 5.5rem; }
-  .mod__n { font-size: clamp(4.5rem, 12vw, 10rem); font-weight: 900; line-height: 0.8; letter-spacing: -0.06em; transition: -webkit-text-stroke-color 0.3s; }
+  .mod { display: grid; grid-template-columns: clamp(5rem, 14vw, 12rem) minmax(0, 1fr); gap: 1rem 2.5rem; padding: clamp(2rem, 4vw, 3rem) 0 clamp(2.25rem, 4vw, 3.5rem); border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--hdr) + 1rem); }
+  .mod__n { font-size: clamp(4.5rem, 12vw, 10rem); font-weight: 900; font-stretch: 100%; line-height: 0.8; letter-spacing: -0.06em; transition: -webkit-text-stroke-color 0.4s; }
   .mod:hover .mod__n, .mod:target .mod__n { -webkit-text-stroke-color: var(--accent); }
   .mod__top { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
   .mod__lvl { display: inline-flex; align-items: center; gap: 0.625rem; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.6875rem; }
   .mod__bars { display: inline-flex; gap: 3px; }
-  .mod__bars i { width: 0.875rem; height: 0.375rem; background: var(--line); border-radius: 2px; }
+  .mod__bars i { width: 0.875rem; height: 0.375rem; background: var(--line); }
   .mod__bars i.on { background: var(--accent); }
   .mod__title { font-size: clamp(2rem, 4.6vw, 3.75rem); max-width: 20ch; }
   .mod__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.75rem; }
@@ -103,6 +103,6 @@ const lvl = (l: string) => (l === 'Beginner' ? 1 : l === 'Intermediate' ? 2 : 3)
   }
 
   .invite { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(2.5rem, 7vw, 6rem); align-items: start; }
-  .invite__intro { display: grid; gap: 1.5rem; position: sticky; top: 6rem; }
+  .invite__intro { display: grid; gap: 1.5rem; position: sticky; top: calc(var(--hdr) + 2rem); }
   @media (max-width: 900px) { .invite { grid-template-columns: 1fr; } .invite__intro { position: static; } }
 </style>

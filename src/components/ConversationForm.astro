@@ -66,7 +66,7 @@ const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
           </div>
         </fieldset>
         <div class="field">
-          <label for="workshop-message">Anything else <span class="hint">— dates, format, who's attending</span></label>
+          <label for="workshop-message">Anything else <span class="hint">— dates, format, who’s attending</span></label>
           <textarea class="input" id="workshop-message" name="message" rows="4" />
         </div>
         <input type="hidden" name="topic" value="Workshop" />
@@ -223,7 +223,7 @@ const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
         say('Sent. Thank you.', 'ok');
         location.href = `/thanks/?t=${encodeURIComponent(topic)}`;
       } catch (err) {
-        say(`Couldn't send: ${(err as Error).message} You can also email connect@lakshaykumar.com.`, 'error');
+        say(`Couldn’t send: ${(err as Error).message} You can also email connect@lakshaykumar.com.`, 'error');
         window.hcaptcha?.reset();
         button.disabled = false;
         label.textContent = 'Retry';

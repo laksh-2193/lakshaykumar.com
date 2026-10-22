@@ -46,20 +46,20 @@ The run went to the final round before it was decided.
 
 ## What actually separated them
 
-It wasn't intelligence. It was **discipline**.
+It wasn’t intelligence. It was **discipline**.
 
-At round 1 the market's RSI was above 0.99. Every model read it the same way: overbought, hold. They agreed on the signal. What they did *next* is where they split.
+At round 1 the market’s RSI was above 0.99. Every model read it the same way: overbought, hold. They agreed on the signal. What they did *next* is where they split.
 
 - **ClaudeTrader** sold into overbought signals early, locked in gains, and re-entered selectively on dips — consistently, across all 20 rounds.
 - **DeepSeekPro** rode momentum hard and nearly caught up. It finished $28 short.
 - **GemmaBot** never placed a single trade. All cash, the whole game. Zero risk, zero reward.
 - **GPTQuant** over-analysed every RSI reading and second-guessed itself into a small loss.
 
-## Why this matters if you're building agents
+## Why this matters if you’re building agents
 
 Agreeing on the facts is not the same as acting well on them. Give four models the same data and prompts and you still get four different risk profiles — one decisive, one aggressive, one frozen, one indecisive. Over many steps, those differences compound.
 
-If you're putting an LLM in a loop where it acts repeatedly — trading, triage, procurement, support routing — test its *behaviour over many turns*, not just its answer to one question. A model that's slightly worse on a benchmark can be far better as an agent if it commits to decisions and doesn't thrash.
+If you’re putting an LLM in a loop where it acts repeatedly — trading, triage, procurement, support routing — test its *behaviour over many turns*, not just its answer to one question. A model that’s slightly worse on a benchmark can be far better as an agent if it commits to decisions and doesn’t thrash.
 
 ## Limits of this experiment
 

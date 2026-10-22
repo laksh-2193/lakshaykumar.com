@@ -35,7 +35,7 @@ export const projects = [
     url: 'https://hyd-rent.vercel.app/',
     status: 'Live',
     summary:
-      "One place for Hyderabad rentals — homes, roommates, deposits, and listings that don't waste your evening.",
+      "One place for Hyderabad rentals — homes, roommates, deposits, and listings that don’t waste your evening.",
     stack: 'Full-stack web, listings aggregation',
   },
   {
@@ -58,7 +58,7 @@ export const experience = [
 ];
 
 export const lessons = [
-  { name: 'Techuro', lesson: "Strong vision isn't enough. Without early product-market fit and clear distribution, momentum dies in the demo." },
+  { name: 'Techuro', lesson: "Strong vision isn’t enough. Without early product-market fit and clear distribution, momentum dies in the demo." },
   { name: 'Eve-Link', lesson: 'Changing live networking behaviour is brutally hard. Tech can assist the moment, not replace it.' },
   { name: 'NFC Smart Cards', lesson: 'Cool hardware means nothing without a must-have use case — and it is easy to copy.' },
   { name: 'Linky', lesson: 'Job-application automation for early-career engineers. Speed without signal hurts more than it helps.' },
