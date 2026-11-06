@@ -1,0 +1,92 @@
+# Pages CMS config — edit posts online at https://app.pagescms.org
+# Saving in the editor commits to main → GitHub Actions rebuilds →
+# /writing/<slug>/, sitemap.xml and rss.xml update automatically.
+# Fields mirror the `writing` schema in src/content.config.ts. Keep them in sync.
+
+media:
+  input: public/images/writing
+  output: /images/writing
+  rename: safe
+  categories: [image]
+
+content:
+  - name: writing
+    label: Writing
+    type: collection
+    path: src/content/writing
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      primary: title
+      sort: date
+      order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description (SEO meta, ~155 chars)
+        type: text
+        required: true
+      - name: tldr
+        label: TL;DR
+        type: text
+        required: true
+      - name: result
+        label: Result (one-line headline result)
+        type: string
+        required: true
+        description: "e.g. Claude +5.26% · GPT −0.23%"
+      - name: date
+        label: Published
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: updated
+        label: Updated
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: series
+        label: Series
+        type: string
+        description: "Existing: AI vs AI · From scratch · Build log"
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: models
+        label: Models compared
+        type: select
+        options:
+          multiple: true
+          values: [claude, gpt, deepseek, google]
+      - name: linkedin
+        label: LinkedIn post URL
+        type: string
+        pattern:
+          regex: "^(https?://.+)?$"
+          message: "Must be a full URL"
+      - name: ask
+        label: CTA question
+        type: string
+        default: "Want the code or the tool behind this?"
+      - name: featured
+        label: Featured
+        type: boolean
+        default: false
+      - name: figure
+        label: Custom figure
+        type: select
+        description: Leave empty unless the post has a built-in figure component.
+        options:
+          values: [arena]
+      - name: body
+        label: Body
+        type: rich-text
+        options:
+          format: markdown
+          switcher: true
