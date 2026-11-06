@@ -151,7 +151,9 @@ const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
     const theme = 'light';
     document.querySelectorAll('.h-captcha').forEach((el) => el.setAttribute('data-theme', theme));
     const s = document.createElement('script');
-    s.src = 'https://js.hcaptcha.com/1/api.js';
+    // recaptchacompat=off stops hCaptcha adding a g-recaptcha-response field,
+    // which Web3Forms reads as reCAPTCHA (a Pro feature) and rejects.
+    s.src = 'https://js.hcaptcha.com/1/api.js?recaptchacompat=off';
     s.async = true;
     s.defer = true;
     document.head.appendChild(s);
@@ -207,6 +209,8 @@ const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
         say('Please complete the quick check first.', 'error');
         return;
       }
+
+      data.delete('g-recaptcha-response'); // belt and braces: never send the reCAPTCHA field
 
       const topic = (data.get('topic') as string) || 'General';
       data.set('subject', `${topic} — ${data.get('name')} via lakshaykumar.com`);
