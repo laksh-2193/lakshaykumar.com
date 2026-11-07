@@ -15,6 +15,17 @@ import { site } from '../data/site';
     <p class="lede">I like talking shop with founders and engineers: early ideas you’re stuck on, which model to use, how to evaluate prompts, agent architecture, and the messy middle of going from zero to one. No pitch, nothing to buy.</p>
   </section>
 
+  <section class="wrap book" aria-labelledby="book-title">
+    <div class="book__head">
+      <p class="label">30 minutes</p>
+      <h2 id="book-title">Book a call</h2>
+      <p>Pick a slot that works for you. Prefer writing? The form is just below.</p>
+    </div>
+    <div id="cal-inline-30min" class="book__cal">
+      <noscript><a class="link" href="https://cal.com/alphic.exe/30min">Book a 30-minute call on Cal.com</a></noscript>
+    </div>
+  </section>
+
   <section class="wrap">
     <div class="talk">
     <ConversationForm />
@@ -28,7 +39,28 @@ import { site } from '../data/site';
   </section>
 </Base>
 
+<script is:inline>
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", "30min", { origin: "https://app.cal.com" });
+  Cal.ns["30min"]("inline", {
+    elementOrSelector: "#cal-inline-30min",
+    config: { layout: "month_view", theme: "light", useSlotsViewOnSmallScreens: "true" },
+    calLink: "alphic.exe/30min",
+  });
+  Cal.ns["30min"]("ui", {
+    theme: "light",
+    cssVarsPerTheme: { light: { "cal-brand": "#c11e00" } },
+    hideEventTypeDetails: false,
+    layout: "month_view",
+  });
+</script>
+
 <style>
+  .book { display: grid; gap: 2rem; padding-bottom: clamp(3rem, 7vw, 5rem); }
+  .book__head { display: grid; gap: 0.75rem; justify-items: start; padding-top: 2rem; border-top: 1px solid var(--fg); }
+  .book__head h2 { font-size: var(--t-h3); letter-spacing: -0.03em; font-weight: 800; }
+  .book__head p:not(.label) { color: var(--soft); max-width: 36rem; }
+  .book__cal { width: 100%; min-height: 34rem; overflow: auto; }
   .head { padding-block: clamp(3rem, 8vw, 6rem) clamp(2.5rem, 5vw, 4rem); display: grid; gap: 1.5rem; justify-items: start; }
   .head h1 { font-size: clamp(2.75rem, 12.6vw, 15rem); line-height: 0.84; letter-spacing: -0.06em; font-weight: 900; font-stretch: 100%; }
   .head .lede { max-width: 42rem; }
